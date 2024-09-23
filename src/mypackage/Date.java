@@ -1,4 +1,5 @@
 package mypackage;
+import java.util.Calendar;
 /**
  * @author Christian Roa
  */
@@ -10,65 +11,82 @@ public class Date implements Comparable<Date>{
     public static final int CENTENNIAL = 100;
     public static final int QUATERCENTENNIAL = 400;
 
+    /** A parameterized constructor that takes a string in a form of "mm/dd/yyyy" */
+    public Date(int year, int month, int day) {
+       this.year = year;
+       this.month = month;
+       this.day = day;
+    }
+
+    /** This method compares 2 dates */
     @Override
-    public int compareTo(Date obj) {
-        return obj.day - this.day;
-    }
-
-    private boolean isLeapYear(){
-        if(this.year % QUADRENNIAL == 0){
-            if(this.year % CENTENNIAL == 0){
-                return this.year % QUATERCENTENNIAL == 0;
-            }
-            else {
-                return true;
-            }
+    public int compareTo(Date date) {
+        if(this.year != date.year){
+            return this.year - date.year;
         }
-        else{
-            return false;
+        else if(this.month != date.month){
+            return this.month - date.month;
+        }
+        else {
+            return this.day - date.day;
         }
     }
 
-    private boolean is31DayMonth(){
-        int january = 0;
-        int march = 2;
-        int may = 4;
-        int july = 6;
-        int august = 7;
-        int october = 9;
-        int december = 11;
-        return this.month == january || this.month == march || this.month == may || this.month == july || this.month == august || this.month == october || this.month == december;
+    /** turns date object to string */
+    @Override
+    public String toString() {
+        return this.month + "/" + this.day + "/" + this.year;
     }
 
-    private boolean isValidMonth() {
-        int numOfMonths = 11;
-        return this.month >= 0 && this.month <= numOfMonths;
+    /** return truth value if the objects date is a weekday */
+    public boolean isWeekday(){
+        Calendar cal = Calendar.getInstance();
+        cal.set(this.year, this.month-1, this.day);
+        int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
+        return dayOfWeek != Calendar.SATURDAY && dayOfWeek != Calendar.SUNDAY;
     }
 
-    private boolean isValidDay(){
-        int maxDays;
-        int february = 1;
-        if(this.month == february){
-            if(this.isLeapYear()){
-                maxDays = 29;
-            }
-            else{
-                maxDays = 28;
-            }
-            return this.day >= 0 && this.day <= maxDays;
-        }
-        else if(this.is31DayMonth()){
-            maxDays = 31;
-            return this.day >= 0 && this.day <= maxDays;
-        }
-        else{
-            maxDays = 30;
-            return this.day >= 0 && this.day <= maxDays;
-        }
+    /** return today's date */
+    public static Date today() {
+        Calendar rightNow = Calendar.getInstance();
+        return new Date(rightNow.get(Calendar.YEAR), rightNow.get(Calendar.MONTH), rightNow.get(Calendar.DAY_OF_MONTH));
     }
 
-    public boolean isValid(){
-        return isValidMonth() && isValidDay();
+    /** checks if date of object is before today or not */
+    public boolean isBeforeToday(){
+        Calendar rightNow = Calendar.getInstance();
+        Calendar thisDate = Calendar.getInstance();
+        thisDate.set(this.year, this.month-1, this.day);
+        return thisDate.before(rightNow);
     }
+
+    /** checks if date of object is between now and six months from now */
+    public boolean isWithinSixMonths(Date date){
+        Calendar rightNow = Calendar.getInstance();
+        Calendar sixMonthsFromNow = Calendar.getInstance();
+        sixMonthsFromNow.add(Calendar.MONTH, 6);
+        Calendar thisDate = Calendar.getInstance();
+        return !thisDate.after(sixMonthsFromNow) && thisDate.after(rightNow);
+    }
+
+    /** checks if date of object is an acceptable/valid date */
+    public boolean isValidDate(){
+        Calendar rightNow = Calendar.getInstance();
+        rightNow.setLenient(false);
+        rightNow.set(this.year, this.month, this.day);
+        int validYear = rightNow.get(Calendar.YEAR);
+        int validMonth = rightNow.get(Calendar.MONTH);
+        int validDay = rightNow.get(Calendar.DAY_OF_MONTH);
+
+        return validYear == year && validMonth == month && validDay == day;
+    }
+
+    /** testbed for class */
+    public static void main(String[] args) {
+        Date test = new Date(2024, 6, 21);
+        System.out.println(test.isValidDate());
+        System.out.println(test.today());
+    }
+
 }
 
