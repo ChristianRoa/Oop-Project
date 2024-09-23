@@ -7,15 +7,38 @@ public class Date implements Comparable<Date>{
     private int year;
     private int month;
     private int day;
-    public static final int QUADRENNIAL = 4;
-    public static final int CENTENNIAL = 100;
-    public static final int QUATERCENTENNIAL = 400;
 
     /** A parameterized constructor that takes a string in a form of "mm/dd/yyyy" */
     public Date(int year, int month, int day) {
        this.year = year;
        this.month = month;
        this.day = day;
+    }
+
+    /** Getters */
+    public int getYear() {
+        return year;
+    }
+
+    public int getMonth() {
+        return month;
+    }
+
+    public int getDay() {
+        return day;
+    }
+
+    /** Setters */
+    public void setYear(int year) {
+        this.year = year;
+    }
+
+    public void setMonth(int month) {
+        this.month = month;
+    }
+
+    public void setDay(int day) {
+        this.day = day;
     }
 
     /** This method compares 2 dates */
