@@ -55,6 +55,16 @@ public class Date implements Comparable<Date>{
         }
     }
 
+    /** */
+    @Override
+    public boolean equals(Object obj){
+        if (obj instanceof Date){
+            Date date = (Date)obj;
+            return date.year == year && date.month == month && date.day == day;
+        }
+        return false;
+    }
+
     /** turns date object to string */
     @Override
     public String toString() {

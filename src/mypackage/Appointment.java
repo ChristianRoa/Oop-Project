@@ -68,11 +68,17 @@ public class Appointment implements Comparable<Appointment> {
 
     /** */
     @Override
-    public String toString() {}
+    public String toString() {
+        return this.date.toString() + " " + this.timeslot + " " + this.patient.toString() + " [" + this.provider.toString() + "]";
+    }
 
     /** */
     @Override
-    public boolean equals() {
-
+    public boolean equals(Object obj) {
+        if (obj instanceof Appointment) {
+            Appointment other = (Appointment) obj;
+            return this.date.equals(other.date) && this.timeslot.equals(other.timeslot) && this.patient.equals(other.patient);
+        }
+        return false;
     }
 }

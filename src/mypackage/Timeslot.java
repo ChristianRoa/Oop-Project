@@ -17,11 +17,4 @@ public enum Timeslot {
         this.hour = hour;
         this.minute = minute;
     }
-    public int getHour() {
-        return hour;
-    }
-
-    public int getMinute() {
-        return minute;
-    }
 }
