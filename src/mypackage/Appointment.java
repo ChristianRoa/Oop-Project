@@ -91,29 +91,31 @@ public class Appointment implements Comparable<Appointment> {
     private static void testCompare(){
         Date date1 = new Date(1999, 5, 17);
         Date date2 = new Date(date1.getYear(), date1.getMonth(), date1.getDay());
-        Profile patient1 = new Profile();
-        Profile patient2 = new Profile();
+        Profile patient1 = new Profile("chris", "roa", date1);
+        Profile patient2 = new Profile("renil", "kristi", date2);
 
-        Appointment app1 = new Appointment(date1, Timeslot.SLOT2, patient1, Provider.slot1);
-        Appointment app2 = new Appointment(date2, Timeslot.SLOT2, patient2, Provider.slot2);
+        Appointment app1 = new Appointment(date1, Timeslot.SLOT2, patient1, Provider.PATEL);
+        Appointment app2 = new Appointment(date2, Timeslot.SLOT2, patient1, Provider.PATEL);
 
         System.out.println("Equality: " + app1.compareTo(app2));
     }
     private static void testEquals(){
         Date date1 = new Date(1999, 5, 17);
         Date date2 = new Date(date1.getYear(), date1.getMonth(), date1.getDay());
-        Profile patient1 = new Profile();
-        Profile patient2 = new Profile();
+        Profile patient1 = new Profile("chris", "roa", date1);
+        Profile patient2 = new Profile("renil", "kristi", date2);
 
-        Appointment app1 = new Appointment(date1, Timeslot.SLOT2, patient1, Provider.slot1);
-        Appointment app2 = new Appointment(date2, Timeslot.SLOT2, patient2, Provider.slot2);
+        Appointment app1 = new Appointment(date1, Timeslot.SLOT2, patient1, Provider.PATEL);
+        Appointment app2 = new Appointment(date2, Timeslot.SLOT2, patient1, Provider.HARPER);
 
-        System.out.println("Equality: " + app1.compareTo(app2));
+        System.out.println("Equality: " + app1.equals(app2));
     }
+
     private static void testToString(){
         Date date1 = new Date(1999, 5, 17);
-        Profile patient1 = new Profile();
-        Appointment app = new Appointment(date1, Timeslot.SLOT2, patient1, Provider.slot1);
+        Profile patient1 = new Profile("chris", "roa", date1);
+        Appointment app = new Appointment(date1, Timeslot.SLOT2, patient1, Provider.PATEL);
         System.out.println(app.toString());
+
     }
 }

@@ -109,52 +109,57 @@ public class List {
 
     public static void main(String[] args) {}
     private static void testContainsAndAdds(){
+        List list = new List();
         Date date = new Date(1999, 5, 17);
-        Appointment[] apps = new Appointment[4];
-        Appointment appointment = new Appointment(date, Timeslot.SLOT2, x, x);
-        apps.add(appointment);
-        System.out.println(apps.contains(appointment));
+        Profile patient1 = new Profile();
+        Appointment appointment = new Appointment(date, Timeslot.SLOT2, patient1, Provider.PATEL);
+        list.add(appointment);
+        System.out.println(list.contains(appointment));
     }
     private static void testRemove(){
+        List list = new List();
         Date date = new Date(1999, 5, 17);
-        Appointment[] apps = new Appointment[4];
-        Appointment appointment = new Appointment(date, Timeslot.SLOT2, x, x);
-        apps.add(appointment);
-        System.out.println(apps.contains(appointment));
-        apps.remove(appointment);
-        System.out.println(apps.contains(appointment));
+        Profile patient1 = new Profile();
+        Appointment appointment = new Appointment(date, Timeslot.SLOT2, patient1, Provider.PATEL);
+        list.add(appointment);
+        System.out.println(list.contains(appointment));
+        list.remove(appointment);
+        System.out.println(list.contains(appointment));
     }
     private static void testPrintByPatient(){
         Date date = new Date(1999, 5, 17);
-        Appointment[] apps = new Appointment[4];
-        Appointment appointment1 = new Appointment(date, Timeslot.SLOT2, x, x);
-        Appointment appointment2 = new Appointment(date, Timeslot.SLOT2, x, x);
-        Appointment appointment3 = new Appointment(date, Timeslot.SLOT2, x, x);
-        apps.add(appointment1);
-        apps.add(appointment2);
-        apps.add(appointment3);
-        apps.printByPatient();
+        Profile patient1 = new Profile();
+        List list = new List();
+        Appointment appointment1 = new Appointment(date, Timeslot.SLOT2, patient1, Provider.PATEL);
+        Appointment appointment2 = new Appointment(date, Timeslot.SLOT2, patient1, Provider.PATEL);
+        Appointment appointment3 = new Appointment(date, Timeslot.SLOT2, patient1, Provider.PATEL);
+        list.add(appointment1);
+        list.add(appointment2);
+        list.add(appointment3);
+        list.printByPatient();
     }
     private static void testPrintByLocation(){
         Date date = new Date(1999, 5, 17);
-        Appointment[] apps = new Appointment[4];
-        Appointment appointment1 = new Appointment(date, Timeslot.SLOT2, x, x);
-        Appointment appointment2 = new Appointment(date, Timeslot.SLOT2, x, x);
-        Appointment appointment3 = new Appointment(date, Timeslot.SLOT2, x, x);
-        apps.add(appointment1);
-        apps.add(appointment2);
-        apps.add(appointment3);
-        apps.printByLocation();
+        Profile patient1 = new Profile();
+        List list = new List();
+        Appointment appointment1 = new Appointment(date, Timeslot.SLOT2, patient1, Provider.PATEL);
+        Appointment appointment2 = new Appointment(date, Timeslot.SLOT2, patient1, Provider.PATEL);
+        Appointment appointment3 = new Appointment(date, Timeslot.SLOT2, patient1, Provider.PATEL);
+        list.add(appointment1);
+        list.add(appointment2);
+        list.add(appointment3);
+        list.printByLocation();
     }
     private static void testPrintByAppointment(){
         Date date = new Date(1999, 5, 17);
-        Appointment[] apps = new Appointment[4];
-        Appointment appointment1 = new Appointment(date, Timeslot.SLOT2, x, x);
-        Appointment appointment2 = new Appointment(date, Timeslot.SLOT2, x, x);
-        Appointment appointment3 = new Appointment(date, Timeslot.SLOT2, x, x);
-        apps.add(appointment1);
-        apps.add(appointment2);
-        apps.add(appointment3);
-        apps.printByAppointment();
+        Profile patient1 = new Profile();
+        List list = new List();
+        Appointment appointment1 = new Appointment(date, Timeslot.SLOT2, patient1, Provider.PATEL);
+        Appointment appointment2 = new Appointment(date, Timeslot.SLOT2, patient1, Provider.PATEL);
+        Appointment appointment3 = new Appointment(date, Timeslot.SLOT2, patient1, Provider.PATEL);
+        list.add(appointment1);
+        list.add(appointment2);
+        list.add(appointment3);
+        list.printByAppointment();
     }
 }

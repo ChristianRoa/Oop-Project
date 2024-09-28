@@ -27,7 +27,22 @@ public class Scheduler {
                 System.out.println("Scheduler terminated");
                 break;
             }
+
         }
         scanner.close();
+    }
+
+    private void processCommand(String commandLine) {
+        String[] commands = commandLine.split(",");
+        String command = commands[0];
+
+        if (command.equals("S")) {
+        }
+        else if (command.equals("C")) {}
+        else if (command.equals("R")) {}
+        else if (command.equals("PA")) {}
+        else if (command.equals("PP")) {}
+        else if (command.equals("PL")) {}
+        else if (command.equals("PS")) {}
     }
 }

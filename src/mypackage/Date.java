@@ -145,18 +145,18 @@ public class Date implements Comparable<Date>{
     }
     private static void testToday(){
         Date date = today();
-        System.out.println(date.toString());
+        System.out.println("today is: " + date.toString());
     }
     private static void testIsBeforeToday(){
         Date date1 = new Date(2024, 9, 25);
-        System.out.println(date1.isBeforeToday());
+        System.out.println("is before today: " + date1.isBeforeToday());
     }
     private static void testIsWithinSixMonths(){
         Date date1 = new Date(2024, 9, 25);
-        System.out.println(date1.isWithinSixMonths(date1));
+        System.out.println("is within 6 months: " + date1.isWithinSixMonths(date1));
     }
     private static void testIsValidDate(){
-        Date date1 = new Date(2024, 9, 25);
+        Date date1 = new Date(2023, 2, 30);
         System.out.println(date1.isValidDate());
     }
 }
