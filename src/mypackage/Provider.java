@@ -3,7 +3,7 @@ package mypackage;
  * @author Renil Khristi
  */
 public enum Provider {
-	PATEL(Location.BRIDGEWATER, Specialty.FAMILY),
+    PATEL(Location.BRIDGEWATER, Specialty.FAMILY),
     LIM(Location.BRIDGEWATER, Specialty.PEDIATRICIAN),
     ZIMNES(Location.CLARK, Specialty.FAMILY),
     HARPER(Location.CLARK, Specialty.FAMILY),
