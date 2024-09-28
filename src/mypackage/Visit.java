@@ -32,12 +32,4 @@ public class Visit {
         return next;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (o instanceof Visit){
-            Visit visit = (Visit) o;
-            return this.appointment.equals(visit.getAppointment());
-        }
-        return false;
-    }
 }

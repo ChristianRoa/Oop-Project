@@ -30,6 +30,7 @@ public class List {
         for (int i = 0; i < this.size; i++) {
             newAppointments[i] = this.appointments[i];
         }
+        this.appointments = newAppointments;
     }
 
     /** method to check if the appointment list contains a specific appointment*/
@@ -62,13 +63,12 @@ public class List {
     }
 
     /** helper bubble sort implementation */
-    public void bubbleSort(Appointment[] appointments){
+    private void bubbleSort(Appointment[] appointments){
         boolean swapped;
-        int n = appointments.length;
 
-        for (int i = 0; i < n-1; i++) {
+        for (int i = 0; i < this.size - 1; i++) {
             swapped = false;
-            for (int j = 0; j < n-i-1; j++) {
+            for (int j = 0; j < this.size - i - 1; j++) {
                 if(appointments[j].compareTo(appointments[j+1]) > 0){
                     Appointment temp = appointments[j];
                     appointments[j] = appointments[j+1];
@@ -76,12 +76,12 @@ public class List {
                     swapped = true;
                 }
             }
-
             if(!swapped){
-                break;
+                break; // If no elements were swapped, the array is already sorted
             }
         }
     }
+
 
     /** ordered by patient profile, date/timeslot */
     public void printByPatient(){
@@ -107,4 +107,54 @@ public class List {
         }
     }
 
+    public static void main(String[] args) {}
+    private static void testContainsAndAdds(){
+        Date date = new Date(1999, 5, 17);
+        Appointment[] apps = new Appointment[4];
+        Appointment appointment = new Appointment(date, Timeslot.SLOT2, x, x);
+        apps.add(appointment);
+        System.out.println(apps.contains(appointment));
+    }
+    private static void testRemove(){
+        Date date = new Date(1999, 5, 17);
+        Appointment[] apps = new Appointment[4];
+        Appointment appointment = new Appointment(date, Timeslot.SLOT2, x, x);
+        apps.add(appointment);
+        System.out.println(apps.contains(appointment));
+        apps.remove(appointment);
+        System.out.println(apps.contains(appointment));
+    }
+    private static void testPrintByPatient(){
+        Date date = new Date(1999, 5, 17);
+        Appointment[] apps = new Appointment[4];
+        Appointment appointment1 = new Appointment(date, Timeslot.SLOT2, x, x);
+        Appointment appointment2 = new Appointment(date, Timeslot.SLOT2, x, x);
+        Appointment appointment3 = new Appointment(date, Timeslot.SLOT2, x, x);
+        apps.add(appointment1);
+        apps.add(appointment2);
+        apps.add(appointment3);
+        apps.printByPatient();
+    }
+    private static void testPrintByLocation(){
+        Date date = new Date(1999, 5, 17);
+        Appointment[] apps = new Appointment[4];
+        Appointment appointment1 = new Appointment(date, Timeslot.SLOT2, x, x);
+        Appointment appointment2 = new Appointment(date, Timeslot.SLOT2, x, x);
+        Appointment appointment3 = new Appointment(date, Timeslot.SLOT2, x, x);
+        apps.add(appointment1);
+        apps.add(appointment2);
+        apps.add(appointment3);
+        apps.printByLocation();
+    }
+    private static void testPrintByAppointment(){
+        Date date = new Date(1999, 5, 17);
+        Appointment[] apps = new Appointment[4];
+        Appointment appointment1 = new Appointment(date, Timeslot.SLOT2, x, x);
+        Appointment appointment2 = new Appointment(date, Timeslot.SLOT2, x, x);
+        Appointment appointment3 = new Appointment(date, Timeslot.SLOT2, x, x);
+        apps.add(appointment1);
+        apps.add(appointment2);
+        apps.add(appointment3);
+        apps.printByAppointment();
+    }
 }

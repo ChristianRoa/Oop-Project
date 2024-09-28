@@ -116,10 +116,48 @@ public class Date implements Comparable<Date>{
 
     /** testbed for class */
     public static void main(String[] args) {
-        Date test = new Date(2024, 6, 21);
-        System.out.println(test.isValidDate());
-        System.out.println(test.today());
+        testCompare();
+        testEquals();
+        testToString();
+        testIsWeekday();
+        testToday();
+        testIsBeforeToday();
+        testIsWithinSixMonths();
+        testIsValidDate();
     }
 
+    private static void testCompare(){
+        Date date1 = new Date(1999, 5, 17);
+        Date date2 = new Date(1999, 5, 17);
+        System.out.println(date1.compareTo(date2));
+    }
+    private static void testEquals(){
+        Date date1 = new Date(1999, 5, 17);
+        Date date2 = new Date(1999, 5, 17);
+        System.out.println(date1.equals(date2));
+    }
+    private static void testToString(){
+        Date date1 = new Date(1999, 5, 17);
+        System.out.println(date1.toString());
+    }
+    private static void testIsWeekday(){
+        Date date1 = new Date(2024, 9, 25);
+    }
+    private static void testToday(){
+        Date date = today();
+        System.out.println(date.toString());
+    }
+    private static void testIsBeforeToday(){
+        Date date1 = new Date(2024, 9, 25);
+        System.out.println(date1.isBeforeToday());
+    }
+    private static void testIsWithinSixMonths(){
+        Date date1 = new Date(2024, 9, 25);
+        System.out.println(date1.isWithinSixMonths(date1));
+    }
+    private static void testIsValidDate(){
+        Date date1 = new Date(2024, 9, 25);
+        System.out.println(date1.isValidDate());
+    }
 }
 

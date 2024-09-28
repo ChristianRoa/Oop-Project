@@ -66,7 +66,7 @@ public class Appointment implements Comparable<Appointment> {
         return this.provider.compareTo(obj.provider);
     }
 
-    /** */
+    /** Override toString method to print to specifications*/
     @Override
     public String toString() {
         return this.date.toString() + " " + this.timeslot + " " + this.patient.toString() + " [" + this.provider.toString() + "]";
@@ -80,5 +80,40 @@ public class Appointment implements Comparable<Appointment> {
             return this.date.equals(other.date) && this.timeslot.equals(other.timeslot) && this.patient.equals(other.patient);
         }
         return false;
+    }
+
+    public static void main(String[] args) {
+        testCompare();
+        testEquals();
+        testToString();
+    }
+
+    private static void testCompare(){
+        Date date1 = new Date(1999, 5, 17);
+        Date date2 = new Date(date1.getYear(), date1.getMonth(), date1.getDay());
+        Profile patient1 = new Profile();
+        Profile patient2 = new Profile();
+
+        Appointment app1 = new Appointment(date1, Timeslot.SLOT2, patient1, Provider.slot1);
+        Appointment app2 = new Appointment(date2, Timeslot.SLOT2, patient2, Provider.slot2);
+
+        System.out.println("Equality: " + app1.compareTo(app2));
+    }
+    private static void testEquals(){
+        Date date1 = new Date(1999, 5, 17);
+        Date date2 = new Date(date1.getYear(), date1.getMonth(), date1.getDay());
+        Profile patient1 = new Profile();
+        Profile patient2 = new Profile();
+
+        Appointment app1 = new Appointment(date1, Timeslot.SLOT2, patient1, Provider.slot1);
+        Appointment app2 = new Appointment(date2, Timeslot.SLOT2, patient2, Provider.slot2);
+
+        System.out.println("Equality: " + app1.compareTo(app2));
+    }
+    private static void testToString(){
+        Date date1 = new Date(1999, 5, 17);
+        Profile patient1 = new Profile();
+        Appointment app = new Appointment(date1, Timeslot.SLOT2, patient1, Provider.slot1);
+        System.out.println(app.toString());
     }
 }
