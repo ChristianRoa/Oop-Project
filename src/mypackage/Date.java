@@ -1,21 +1,27 @@
 package mypackage;
+
 import java.util.Calendar;
+
 /**
  * @author Christian Roa
  */
-public class Date implements Comparable<Date>{
+public class Date implements Comparable<Date> {
     private int year;
     private int month;
     private int day;
 
-    /** A parameterized constructor that takes a string in a form of "mm/dd/yyyy" */
+    /**
+     * A parameterized constructor that takes a string in a form of "mm/dd/yyyy"
+     */
     public Date(int year, int month, int day) {
-       this.year = year;
-       this.month = month;
-       this.day = day;
+        this.year = year;
+        this.month = month;
+        this.day = day;
     }
 
-    /** Getters */
+    /**
+     * Getters
+     */
     public int getYear() {
         return year;
     }
@@ -28,7 +34,9 @@ public class Date implements Comparable<Date>{
         return day;
     }
 
-    /** Setters */
+    /**
+     * Setters
+     */
     public void setYear(int year) {
         this.year = year;
     }
@@ -41,123 +49,137 @@ public class Date implements Comparable<Date>{
         this.day = day;
     }
 
-    /** This method compares 2 dates */
+    /**
+     * This method compares 2 dates
+     */
     @Override
     public int compareTo(Date date) {
-        if(this.year != date.year){
+        if (this.year != date.year) {
             return this.year - date.year;
-        }
-        else if(this.month != date.month){
+        } else if (this.month != date.month) {
             return this.month - date.month;
-        }
-        else {
+        } else {
             return this.day - date.day;
         }
     }
 
-    /** */
+    /**
+     * Check if two Date objects are equal
+     */
     @Override
-    public boolean equals(Object obj){
-        if (obj instanceof Date){
-            Date date = (Date)obj;
+    public boolean equals(Object obj) {
+        if (obj instanceof Date) {
+            Date date = (Date) obj;
             return date.year == year && date.month == month && date.day == day;
         }
         return false;
     }
 
-    /** turns date object to string */
+    /**
+     * Converts the date object to a string in the format mm/dd/yyyy
+     */
     @Override
     public String toString() {
         return this.month + "/" + this.day + "/" + this.year;
     }
 
-    /** return truth value if the objects date is a weekday */
-    public boolean isWeekday(){
+    /**
+     * Return true if the date is a weekday
+     */
+    public boolean isWeekday() {
         Calendar cal = Calendar.getInstance();
-        cal.set(this.year, this.month-1, this.day);
+        cal.set(this.year, this.month - 1, this.day);
         int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
         return dayOfWeek != Calendar.SATURDAY && dayOfWeek != Calendar.SUNDAY;
     }
 
-    /** return today's date */
+    /**
+     * Return today's date
+     */
     public static Date today() {
         Calendar rightNow = Calendar.getInstance();
-        return new Date(rightNow.get(Calendar.YEAR), rightNow.get(Calendar.MONTH), rightNow.get(Calendar.DAY_OF_MONTH));
+        return new Date(rightNow.get(Calendar.YEAR), rightNow.get(Calendar.MONTH) + 1, rightNow.get(Calendar.DAY_OF_MONTH));
     }
 
-    /** checks if date of object is before today or not */
-    public boolean isBeforeToday(){
+    /**
+     * Helper method that Checks if the date is before today
+     */
+    private boolean isBeforeToday() {
         Calendar rightNow = Calendar.getInstance();
         Calendar thisDate = Calendar.getInstance();
-        thisDate.set(this.year, this.month-1, this.day);
+        thisDate.set(this.year, this.month - 1, this.day);
         return thisDate.before(rightNow);
     }
 
-    /** checks if date of object is between now and six months from now */
-    public boolean isWithinSixMonths(Date date){
+    /**
+     * Helper method that Checks if the date is within six months from today
+     */
+    private boolean isWithinSixMonths(Date date) {
         Calendar rightNow = Calendar.getInstance();
         Calendar sixMonthsFromNow = Calendar.getInstance();
         sixMonthsFromNow.add(Calendar.MONTH, 6);
         Calendar thisDate = Calendar.getInstance();
-        return !thisDate.after(sixMonthsFromNow) && thisDate.after(rightNow);
+        thisDate.set(date.year, date.month - 1, date.day);
+        return thisDate.after(rightNow) && !thisDate.after(sixMonthsFromNow);
     }
 
-    /** checks if date of object is an acceptable/valid date */
-    public boolean isValidDate(){
-        Calendar rightNow = Calendar.getInstance();
-        rightNow.setLenient(false);
-        rightNow.set(this.year, this.month, this.day);
-        int validYear = rightNow.get(Calendar.YEAR);
-        int validMonth = rightNow.get(Calendar.MONTH);
-        int validDay = rightNow.get(Calendar.DAY_OF_MONTH);
+    /**
+     * Check if the date is valid
+     */
+    public boolean isValidDate() {
+        Calendar dateToValidate = Calendar.getInstance();
+        dateToValidate.setLenient(false);
 
-        return validYear == year && validMonth == month && validDay == day;
+        try {
+            dateToValidate.set(this.year, this.month - 1, this.day);
+            dateToValidate.getTime();
+        } catch (Exception e) {
+            return false;
+        }
+        if (this.isBeforeToday()) {
+            return false;
+        }
+        if (!this.isWeekday()) {
+            return false;
+        }
+        if (!this.isWithinSixMonths(this)) {
+            return false;
+        }
+        return true;
     }
 
-    /** testbed for class */
+
+    /** testbed for the class */
     public static void main(String[] args) {
-        testCompare();
-        testEquals();
-        testToString();
-        testIsWeekday();
-        testToday();
-        testIsBeforeToday();
-        testIsWithinSixMonths();
-        testIsValidDate();
+        testValid1(); //testing tomm
+        testValid2(); // testing valid date within 6 months
+        testValid3(); // testing leap year date in non leap year
+        testValid4(); // testing before date
+        testValid5(); // testing after date
+        testValid6(); // testing within 6 months but on a weekend
     }
-
-    private static void testCompare(){
-        Date date1 = new Date(1999, 5, 17);
-        Date date2 = new Date(1999, 5, 17);
-        System.out.println(date1.compareTo(date2));
+    private static void testValid1() {
+        Date date = new Date(2024, 9, 30);
+        System.out.println(date.toString() + " " + date.isValidDate());
     }
-    private static void testEquals(){
-        Date date1 = new Date(1999, 5, 17);
-        Date date2 = new Date(1999, 5, 17);
-        System.out.println(date1.equals(date2));
+    private static void testValid2() {
+        Date date = new Date(2025, 2, 28);
+        System.out.println(date.toString() + " " + date.isValidDate());
     }
-    private static void testToString(){
-        Date date1 = new Date(1999, 5, 17);
-        System.out.println(date1.toString());
+    private static void testValid3() {
+        Date date = new Date(2025, 2, 29);
+        System.out.println(date.toString() + " " + date.isValidDate());
     }
-    private static void testIsWeekday(){
-        Date date1 = new Date(2024, 9, 25);
+    private static void testValid4() {
+        Date date = new Date(2024, 2, 29);
+        System.out.println(date.toString() + " " + date.isValidDate());
     }
-    private static void testToday(){
-        Date date = today();
-        System.out.println("today is: " + date.toString());
+    private static void testValid5() {
+        Date date = new Date(2028, 5, 30);
+        System.out.println(date.toString() + " " + date.isValidDate());
     }
-    private static void testIsBeforeToday(){
-        Date date1 = new Date(2024, 9, 25);
-        System.out.println("is before today: " + date1.isBeforeToday());
-    }
-    private static void testIsWithinSixMonths(){
-        Date date1 = new Date(2024, 9, 25);
-        System.out.println("is within 6 months: " + date1.isWithinSixMonths(date1));
-    }
-    private static void testIsValidDate(){
-        Date date1 = new Date(2023, 2, 30);
-        System.out.println(date1.isValidDate());
+    private static void testValid6() {
+        Date date = new Date(2024, 10, 5);
+        System.out.println(date.toString() + " " + date.isValidDate());
     }
 }
-
