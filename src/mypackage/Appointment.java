@@ -8,45 +8,102 @@ public class Appointment implements Comparable<Appointment> {
     private Profile patient;
     private Provider provider;
 
+    /**
+     * Constructor to create an Appointment object with the given date, timeslot, patient, and provider.
+     *
+     * @param date     the date of the appointment
+     * @param timeslot the timeslot of the appointment
+     * @param patient  the patient associated with the appointment
+     * @param provider the provider for the appointment
+     */
     public Appointment(Date date, Timeslot timeslot, Profile patient, Provider provider) {
         this.date = date;
         this.timeslot = timeslot;
         this.patient = patient;
         this.provider = provider;
     }
+
+    /**
+     * Retrieves the date of the appointment.
+     *
+     * @return the date of the appointment
+     */
     /** date getter */
     public Date getDate() {
         return date;
     }
-    /** timeslot getter */
+
+    /**
+     * Retrieves the timeslot of the appointment.
+     *
+     * @return the timeslot of the appointment
+     */
     public Timeslot getTimeslot() {
         return timeslot;
     }
-    /** profile getter */
+
+    /**
+     * Retrieves the patient profile associated with the appointment.
+     *
+     * @return the patient profile
+     */
     public Profile getPatient() {
         return patient;
     }
-    /** provider getter */
+
+    /**
+     * Retrieves the provider of the appointment.
+     *
+     * @return the provider of the appointment
+     */
     public Provider getProvider() {
         return provider;
     }
-    /** date setter */
+
+    /**
+     * Updates the date of the appointment.
+     *
+     * @param date the new date of the appointment
+     */
     public void setDate(Date date) {
         this.date = date;
     }
-    /** timeslot setter */
+
+    /**
+     * Updates the timeslot of the appointment.
+     *
+     * @param timeslot the new timeslot of the appointment
+     */
     public void setTimeslot(Timeslot timeslot) {
         this.timeslot = timeslot;
     }
-    /** profile setter */
+
+    /**
+     * Updates the patient profile associated with the appointment.
+     *
+     * @param patient the new patient profile
+     */
     public void setPatient(Profile patient) {
         this.patient = patient;
     }
-    /** provider setter */
+
+    /**
+     * Updates the provider of the appointment.
+     *
+     * @param provider the new provider of the appointment
+     */
     public void setProvider(Provider provider) {
         this.provider = provider;
     }
-    /** */
+
+    /**
+     * Compares this appointment to another appointment.
+     * The comparison is based on date, timeslot, patient, and provider in that order.
+     *
+     * @param obj the appointment to be compared
+     * @return a negative integer, zero, or a positive integer if this appointment is less than,
+     *         equal to, or greater than the specified appointment
+     */
     @Override
     public int compareTo(Appointment obj) {
         int dateCompare = this.date.compareTo(obj.date);
@@ -66,13 +123,23 @@ public class Appointment implements Comparable<Appointment> {
         return this.provider.compareTo(obj.provider);
     }
 
-    /** Override toString method to print to specifications*/
+    /**
+     * Returns a string representation of the appointment, including date, timeslot, patient, and provider.
+     *
+     * @return a string representation of the appointment
+     */
     @Override
     public String toString() {
         return this.date.toString() + " " + this.timeslot + " " + this.patient.toString() + " [" + this.provider.toString() + "]";
     }
 
-    /** */
+    /**
+     * Checks whether this appointment is equal to another object.
+     * The appointments are considered equal if they have the same date, timeslot, and patient.
+     *
+     * @param obj the object to compare to
+     * @return true if the appointments are equal, false otherwise
+     */
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof Appointment) {
@@ -82,7 +149,7 @@ public class Appointment implements Comparable<Appointment> {
         return false;
     }
 
-    public static void main(String[] args) {
+   /* public static void main(String[] args) {
         testCompare();
         testEquals();
         testToString();
@@ -117,5 +184,5 @@ public class Appointment implements Comparable<Appointment> {
         Appointment app = new Appointment(date1, Timeslot.SLOT2, patient1, Provider.PATEL);
         System.out.println(app.toString());
 
-    }
+    } */
 }

@@ -11,7 +11,11 @@ public class Date implements Comparable<Date> {
     private int day;
 
     /**
-     * A parameterized constructor that takes a string in a form of "mm/dd/yyyy"
+     * Constructs a Date object with the specified year, month, and day.
+     *
+     * @param year  The year of the date.
+     * @param month The month of the date (1-12).
+     * @param day   The day of the date (1-31).
      */
     public Date(int year, int month, int day) {
         this.year = year;
@@ -20,37 +24,64 @@ public class Date implements Comparable<Date> {
     }
 
     /**
-     * Getters
+     * Returns the year of the date.
+     *
+     * @return The year.
      */
     public int getYear() {
         return year;
     }
 
+    /**
+     * Returns the month of the date.
+     *
+     * @return The month (1-12).
+     */
     public int getMonth() {
         return month;
     }
 
+    /**
+     * Returns the day of the date.
+     *
+     * @return The day (1-31).
+     */
     public int getDay() {
         return day;
     }
 
     /**
-     * Setters
+     * Sets the year of the date.
+     *
+     * @param year The year to set.
      */
     public void setYear(int year) {
         this.year = year;
     }
 
+    /**
+     * Sets the month of the date.
+     *
+     * @param month The month to set (1-12).
+     */
     public void setMonth(int month) {
         this.month = month;
     }
 
+    /**
+     * Sets the day of the date.
+     *
+     * @param day The day to set (1-31).
+     */
     public void setDay(int day) {
         this.day = day;
     }
 
     /**
-     * This method compares 2 dates
+     * Compares this Date object with another Date object.
+     *
+     * @param date The Date to compare with.
+     * @return A negative integer, zero, or a positive integer if this Date is less than, equal to, or greater than the specified date.
      */
     @Override
     public int compareTo(Date date) {
@@ -64,7 +95,10 @@ public class Date implements Comparable<Date> {
     }
 
     /**
-     * Check if two Date objects are equal
+     * Checks if this Date is equal to another object.
+     *
+     * @param obj The object to compare.
+     * @return true if the object is a Date with the same year, month, and day; false otherwise.
      */
     @Override
     public boolean equals(Object obj) {
@@ -76,7 +110,9 @@ public class Date implements Comparable<Date> {
     }
 
     /**
-     * Converts the date object to a string in the format mm/dd/yyyy
+     * Returns the date in "mm/dd/yyyy" format.
+     *
+     * @return The date as a string.
      */
     @Override
     public String toString() {
@@ -84,7 +120,9 @@ public class Date implements Comparable<Date> {
     }
 
     /**
-     * Return true if the date is a weekday
+     * Checks if the date falls on a weekday.
+     *
+     * @return true if the date is a weekday (Monday-Friday); false otherwise.
      */
     public boolean isWeekday() {
         Calendar cal = Calendar.getInstance();
@@ -94,7 +132,9 @@ public class Date implements Comparable<Date> {
     }
 
     /**
-     * Return today's date
+     * Returns the current date (today's date).
+     *
+     * @return Today's date as a Date object.
      */
     public static Date today() {
         Calendar rightNow = Calendar.getInstance();
@@ -102,7 +142,9 @@ public class Date implements Comparable<Date> {
     }
 
     /**
-     * Helper method that Checks if the date is before today
+     * Checks if the date is before today's date.
+     *
+     * @return true if the date is before today; false otherwise.
      */
     private boolean isBeforeToday() {
         Calendar rightNow = Calendar.getInstance();
@@ -112,7 +154,10 @@ public class Date implements Comparable<Date> {
     }
 
     /**
-     * Helper method that Checks if the date is within six months from today
+     * Checks if the date is within six months from today.
+     *
+     * @param date The date to check.
+     * @return true if the date is within six months from today; false otherwise.
      */
     private boolean isWithinSixMonths(Date date) {
         Calendar rightNow = Calendar.getInstance();
@@ -124,7 +169,9 @@ public class Date implements Comparable<Date> {
     }
 
     /**
-     * Check if the date is valid
+     * Validates if the date is a valid date. A valid date must be in the future, on a weekday, and within six months.
+     *
+     * @return true if the date is valid; false otherwise.
      */
     public boolean isValidDate() {
         Calendar dateToValidate = Calendar.getInstance();
@@ -149,7 +196,7 @@ public class Date implements Comparable<Date> {
     }
 
 
-    /** testbed for the class */
+    /** testbed for the Date class */
     public static void main(String[] args) {
         testValid1(); //testing tomm
         testValid2(); // testing valid date within 6 months
@@ -162,22 +209,27 @@ public class Date implements Comparable<Date> {
         Date date = new Date(2024, 9, 30);
         System.out.println(date.toString() + " " + date.isValidDate());
     }
+
     private static void testValid2() {
         Date date = new Date(2025, 2, 28);
         System.out.println(date.toString() + " " + date.isValidDate());
     }
+
     private static void testValid3() {
         Date date = new Date(2025, 2, 29);
         System.out.println(date.toString() + " " + date.isValidDate());
     }
+
     private static void testValid4() {
         Date date = new Date(2024, 2, 29);
         System.out.println(date.toString() + " " + date.isValidDate());
     }
+
     private static void testValid5() {
         Date date = new Date(2028, 5, 30);
         System.out.println(date.toString() + " " + date.isValidDate());
     }
+
     private static void testValid6() {
         Date date = new Date(2024, 10, 5);
         System.out.println(date.toString() + " " + date.isValidDate());

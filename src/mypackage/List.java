@@ -7,12 +7,20 @@ public class List {
     private int size; // number of appointments in the array
     private static final int notFound = -1; // A constant used to define something that was not found
 
+    /**
+     * Constructs a new List with an initial capacity of 4 appointments.
+     */
     public List() {
         this.appointments = new Appointment[4];
         this.size = 0;
     }
 
-    /** helper method that looks for specific appointment in the appointment array */
+    /**
+     * Helper method that searches for a specific appointment in the array.
+     *
+     * @param appointment The appointment to find.
+     * @return The index of the appointment if found; -1 if not found.
+     */
     private int find(Appointment appointment){
         for (int i = 0; i < this.size; i++) {
             if(this.appointments[i].equals(appointment)){
@@ -22,7 +30,9 @@ public class List {
         return notFound;
     }
 
-    /** helper method to increase the capacity by 4 */
+    /**
+     * Helper method to increase the capacity of the appointments array by 4.
+     */
     private void grow(){
         // number capacity is incremented by
         int capacityIncrement = 4;
@@ -33,13 +43,24 @@ public class List {
         this.appointments = newAppointments;
     }
 
-    /** method to check if the appointment list contains a specific appointment*/
+    /**
+     * Checks if the appointment list contains a specific appointment.
+     *
+     * @param appointment The appointment to search for.
+     * @return true if the appointment is found, false otherwise.
+     */
     public boolean contains(Appointment appointment){
         int appointmentCheck = find(appointment);
         return appointmentCheck != notFound;
     }
 
-    /** checks if array is full and calls grow to increase capacity as needed. Then adds appointment to the end of the array*/
+    /**
+     * Adds a new appointment to the end of the list. If the array is full, it calls {@code grow()}
+     * to increase the capacity before adding the new appointment.
+     *
+     * @param appointment The appointment to add.
+     */
+
     public void add(Appointment appointment){
        if(this.appointments.length == this.size){
            this.grow();
@@ -47,7 +68,12 @@ public class List {
        this.appointments[this.size++] = appointment;
     }
 
-    /** if appointment is found removes it from the list */
+    /**
+     * Removes an appointment from the list if it is found. If the appointment is removed,
+     * the elements in the array are shifted to fill the gap.
+     *
+     * @param appointment The appointment to remove.
+     */
     public void remove(Appointment appointment){
         int index = find(appointment);
         if (index == notFound) {
@@ -59,7 +85,9 @@ public class List {
         this.appointments[--this.size] = null;
     }
 
-
+    /**
+     * Helper method that sorts the appointment list by patient name in alphabetical order.
+     */
     private void sortByPatient(){
         for (int i = 1; i < this.size; i++) {
             Appointment appointment = this.appointments[i];
@@ -72,6 +100,10 @@ public class List {
             appointments[j+1] = appointment;
         }
     }
+
+    /**
+     * Helper method that sorts the appointment list by the location of the provider.
+     */
     private void sortByLocation(){
         for (int i = 1; i < this.size; i++) {
             Appointment appointment = this.appointments[i];
@@ -85,6 +117,9 @@ public class List {
         }
     }
 
+    /**
+     * Helper method that sorts the appointment list by appointment date and time.
+     */
     private void sortByAppointment(){
         for (int i = 1; i < this.size; i++) {
             Appointment appointment = this.appointments[i];
@@ -98,7 +133,9 @@ public class List {
         }
     }
 
-    /** ordered by patient profile, date/timeslot */
+    /**
+     * Prints the appointments ordered by patient profile and date/timeslot.
+     */
     public void printByPatient(){
         sortByPatient();
         for (int i = 0; i < this.size; i++) {
@@ -107,8 +144,9 @@ public class List {
 
     }
 
-
-    /** ordered by county, date/timeslot */
+    /**
+     * Prints the appointments ordered by location (county) and date/timeslot.
+     */
     public void printByLocation(){
         sortByLocation();
          for (int i = 0; i < this.size; i++) {
@@ -116,7 +154,9 @@ public class List {
         }
     }
 
-    /** ordered by date/timeslot, provider name */
+    /**
+     * Prints the appointments ordered by date/timeslot and provider name.
+     */
     public void printByAppointment(){
         sortByAppointment();
         for (int i = 0; i < this.size; i++) {
