@@ -1,6 +1,7 @@
 package mypackage;
 /**
- * @author Christian Roa
+ * This class represents a list of appointments.
+ * @author Christian Roa, Renil Khristi
  */
 public class List {
     private Appointment[] appointments;

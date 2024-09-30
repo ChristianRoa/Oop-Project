@@ -2,7 +2,7 @@ package mypackage;
 
 import java.util.Scanner;
 /**
- * @author Christian Roa
+ * @author Christian Roa, Renil Khristi
  */
 public class Scheduler {
     private Scanner scanner; // reads user input

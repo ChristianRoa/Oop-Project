@@ -3,7 +3,8 @@ package mypackage;
 import java.util.Calendar;
 
 /**
- * @author Christian Roa
+ * This class implements Date functionality with year, month, and day attributes.
+ * @author Christian Roa, Renil Khristi
  */
 public class Date implements Comparable<Date> {
     private int year;

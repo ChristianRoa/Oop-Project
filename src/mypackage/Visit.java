@@ -1,6 +1,7 @@
 package mypackage;
 /**
- * @author Christian Roa
+ * This class implements the node structure and functionality for a linked list.
+ * @author Christian Roa, Renil Khristi
  */
 public class Visit {
     private Appointment appointment;
@@ -18,7 +19,7 @@ public class Visit {
      * Constructor that initializes a Visit with a given appointment and the reference to the next Visit.
      *
      * @param appointment The appointment for this visit.
-     * @param next The next visit in the chain.
+     * @param next The next visit in the list.
      */
     public Visit(Appointment appointment, Visit next) {
         this.appointment = appointment;
@@ -35,7 +36,7 @@ public class Visit {
     }
 
     /**
-     * Sets the reference to the next visit in the chain.
+     * Sets the reference to the next visit in the list.
      *
      * @param next The next Visit to set.
      */

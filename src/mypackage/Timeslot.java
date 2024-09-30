@@ -1,6 +1,6 @@
 package mypackage;
 /**
- * @author Christian Roa
+ * @author Christian Roa, Renil Khristi
  */
 public enum Timeslot {
     SLOT1 (9,0),

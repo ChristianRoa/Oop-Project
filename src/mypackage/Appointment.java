@@ -1,6 +1,7 @@
 package mypackage;
 /**
- * @author Christian Roa
+ * This class models an appointment with attributes for date, timeslot, patient, and provider.
+ * @author Christian Roa, Renil Khristi
  */
 public class Appointment implements Comparable<Appointment> {
     private Date date;

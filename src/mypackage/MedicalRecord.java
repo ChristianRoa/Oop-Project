@@ -1,6 +1,6 @@
 package mypackage;
 /**
- * @author Renil Khristi
+ * @author Renil Khristi, Christian Roa
  */
 public class MedicalRecord {
 	
