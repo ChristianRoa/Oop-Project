@@ -6,7 +6,8 @@ package mypackage;
 public class List {
     private Appointment[] appointments;
     private int size; // number of appointments in the array
-    private static final int notFound = -1; // A constant used to define something that was not found
+    private static final int NOT_FOUND = -1; // A constant used to define something that was not found
+    private static final int GROWTH_INCREMENT = 4;
 
     /**
      * Constructs a new List with an initial capacity of 4 appointments.
@@ -28,16 +29,14 @@ public class List {
                 return i;
             }
         }
-        return notFound;
+        return NOT_FOUND;
     }
 
     /**
      * Helper method to increase the capacity of the appointments array by 4.
      */
     private void grow(){
-        // number capacity is incremented by
-        int capacityIncrement = 4;
-        Appointment[] newAppointments = new Appointment[this.appointments.length + capacityIncrement];
+        Appointment[] newAppointments = new Appointment[this.appointments.length + GROWTH_INCREMENT];
         for (int i = 0; i < this.size; i++) {
             newAppointments[i] = this.appointments[i];
         }
@@ -52,7 +51,7 @@ public class List {
      */
     public boolean contains(Appointment appointment){
         int appointmentCheck = find(appointment);
-        return appointmentCheck != notFound;
+        return appointmentCheck != NOT_FOUND;
     }
 
     /**
@@ -77,7 +76,7 @@ public class List {
      */
     public void remove(Appointment appointment){
         int index = find(appointment);
-        if (index == notFound) {
+        if (index == NOT_FOUND) {
             return;
         }
         for (int i = index; i < this.size - 1; i++) {
