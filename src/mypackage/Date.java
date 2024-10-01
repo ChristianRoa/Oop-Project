@@ -205,7 +205,7 @@ public class Date implements Comparable<Date> {
     }
 
     private static void testValid2() {
-        Date date = new Date(2025, 2, 28);
+        Date date = new Date(2026, 2, 28);
         System.out.println(date.toString() + " " + date.isValidDate());
     }
 
