@@ -17,7 +17,7 @@ public class Scheduler {
         String command;
 
         while (true) {
-            System.out.print(" ");
+            System.out.print("");
             command = scanner.nextLine().trim();
 
             if (command.isEmpty()) {
@@ -77,10 +77,10 @@ public class Scheduler {
             System.out.println("Appointment date: " + a.getDate().toString() + " is not a valid calendar date.");
             return true;
         } else if (a.getDate().equals(Date.today())) {
-            System.out.println("Appointment date: " + a.getDate().toString() + " is today or a date before today");
+            System.out.println("Appointment date: " + a.getDate().toString() + " is today or a date before today.");
             return true;
         } else if (a.getDate().isBeforeToday()) {
-            System.out.println("Appointment date: " + a.getDate().toString() + " is today or a date before today");
+            System.out.println("Appointment date: " + a.getDate().toString() + " is today or a date before today.");
             return true;
         } else if (!a.getDate().isWeekday()) {
             System.out.println("Appointment date: " + a.getDate().toString() + " is Saturday or Sunday.");
@@ -88,6 +88,17 @@ public class Scheduler {
         }
         else if (!a.getDate().isWithinSixMonths()){
             System.out.println("Appointment date: " + a.getDate().toString() + " is not within six months.");
+            return true;
+        }
+        return false;
+    }
+
+    private boolean isInvalidAppointment(Profile p) {
+        if(!p.dob().isValidDate()){
+            System.out.println("Appointment date: " + p.dob().toString() + " is not a valid calendar date.");
+            return true;
+        } else if (!p.dob().isBeforeToday()) {
+            System.out.println("Appointment date: " + p.dob().toString() + " is today or a date after today.");
             return true;
         }
         return false;
@@ -114,11 +125,9 @@ public class Scheduler {
                 case 5: return Timeslot.SLOT5;
                 case 6: return Timeslot.SLOT6;
                 default:
-                    System.out.println(time + " is not a valid time slot."); // Invalid number
                     return null;
             }
         } catch (NumberFormatException e) {
-            System.out.println(timeString + " is not a valid time slot."); // Non-numeric input
             return null;
         }
     }
@@ -135,7 +144,6 @@ public class Scheduler {
             case "RAMESH": return Provider.RAMESH;
             case "CERAVOLO": return Provider.CERAVOLO;
             default:
-                System.out.println(providerName + " is not a valid provider.");
                 return null;
         }
     }
@@ -154,15 +162,29 @@ public class Scheduler {
         Profile patient = new Profile(firstName, lastName, parseDate(dobString));
         Provider provider = parseProvider(providerName);
 
-        Appointment a = new Appointment(appointmentDate, timeslot, patient, provider);
-        if (isInvalidAppointment(a)) {
+        if (timeslot == null) {
+            System.out.println(timeslotStr + " is not a valid timeslot.");
             return;
-        } else {
-            appointments.add(a);
-            System.out.println(a + " booked.");
+        }
+        if (provider == null) {
+            System.out.println(providerName + " - provider doesn't exist.");
+            return;
         }
 
+        Appointment appointment = new Appointment(appointmentDate, timeslot, patient, provider);
+
+        if (isInvalidAppointment(appointment)) {
+            return;
+        }
+        if(isInvalidAppointment(patient)){
+            return;
+        }
+
+        // Add the valid appointment to the list
+        appointments.add(appointment);
+        System.out.println(appointment + " booked.");
     }
+
 
     private void cancelAppointment(StringTokenizer st) {
         String dateString = st.nextToken();
@@ -207,23 +229,39 @@ public class Scheduler {
     }
 
     private void displayAppointmentsSortedByDate() {
-        System.out.println("** Appointments ordered by county/date/time **");
-        appointments.printByAppointment();
+        if(appointments.getSize()==0) {
+            System.out.println("The schedule calender is empty.");
+        }
+        else {
+            System.out.println("** Appointments ordered by date/time/provider **");
+            appointments.printByAppointment();
+            System.out.println("** end of list **");
+        }
     }
 
     private void displayAppointmentsSortedByPatient() {
-        System.out.println("** Appointments ordered by county/date/time **");
-        appointments.printByPatient();
+        if(appointments.getSize()==0) {
+            System.out.println("The schedule calender is empty.");
+        }
+        else {
+            System.out.println("** Appointments ordered by patient/date/time **");
+            appointments.printByPatient();
+            System.out.println("** end of list **");
+        }
     }
 
     private void displayAppointmentsSortedByLocation() {
-        System.out.println("** Appointments ordered by county/date/time **");
-        appointments.printByLocation();
+        if(appointments.getSize()==0) {
+            System.out.println("The schedule calender is empty.");
+        }
+        else {
+            System.out.println("** Appointments ordered by county/date/time **");
+            appointments.printByLocation();
+            System.out.println("** end of list **");
+        }
     }
 
     private void displayBillingStatements() {
-
     }
-
 
 }

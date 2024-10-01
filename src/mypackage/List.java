@@ -146,7 +146,7 @@ public class List {
     public void printByPatient(){
         sortByPatient();
         for (int i = 0; i < this.size; i++) {
-            System.out.println(this.appointments[i].getPatient().toString());
+            System.out.println(this.appointments[i].toString());
         }
 
     }
