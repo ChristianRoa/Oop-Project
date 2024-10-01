@@ -207,18 +207,33 @@ public class Scheduler {
     }
 
     private void displayAppointmentsSortedByDate() {
+    	if(appointments.getSize()==0) {
+    		System.out.println("The schedule calender is empty.");
+    	}
+    	else {
         System.out.println("** Appointments ordered by county/date/time **");
         appointments.printByAppointment();
+    	}
     }
 
     private void displayAppointmentsSortedByPatient() {
+    	if(appointments.getSize()==0) {
+    		System.out.println("The schedule calender is empty.");
+    	}
+    	else {
         System.out.println("** Appointments ordered by county/date/time **");
         appointments.printByPatient();
+    	}
     }
 
     private void displayAppointmentsSortedByLocation() {
+    	if(appointments.getSize()==0) {
+    		System.out.println("The schedule calender is empty.");
+    	}
+    	else {
         System.out.println("** Appointments ordered by county/date/time **");
         appointments.printByLocation();
+    	}
     }
 
     private void displayBillingStatements() {
