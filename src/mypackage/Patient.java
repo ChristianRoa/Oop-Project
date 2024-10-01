@@ -47,7 +47,7 @@ public class Patient implements Comparable<Patient> {
     
     @Override
     public int compareTo(Patient obj) {
-    return this.profile.compareTo(obj.profile);
+    return this.profile.compareTo(obj.getProfile());
     }
   
 }

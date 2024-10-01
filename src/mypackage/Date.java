@@ -147,7 +147,7 @@ public class Date implements Comparable<Date> {
      *
      * @return true if the date is before today; false otherwise.
      */
-    private boolean isBeforeToday() {
+    public boolean isBeforeToday() {
         Calendar rightNow = Calendar.getInstance();
         Calendar thisDate = Calendar.getInstance();
         thisDate.set(this.year, this.month - 1, this.day);
@@ -157,17 +157,19 @@ public class Date implements Comparable<Date> {
     /**
      * Checks if the date is within six months from today.
      *
-     * @param date The date to check.
      * @return true if the date is within six months from today; false otherwise.
      */
-    private boolean isWithinSixMonths(Date date) {
-        Calendar rightNow = Calendar.getInstance();
-        Calendar sixMonthsFromNow = Calendar.getInstance();
-        sixMonthsFromNow.add(Calendar.MONTH, 6);
+    public boolean isWithinSixMonths() {
+        Calendar today = Calendar.getInstance();
+        Calendar sixMonthsFromToday = Calendar.getInstance();
+        sixMonthsFromToday.add(Calendar.MONTH, 6);
+
         Calendar thisDate = Calendar.getInstance();
-        thisDate.set(date.year, date.month - 1, date.day);
-        return thisDate.after(rightNow) && !thisDate.after(sixMonthsFromNow);
+        thisDate.set(this.year, this.month - 1, this.day);
+
+        return thisDate.after(today) && !thisDate.after(sixMonthsFromToday);
     }
+
 
     /**
      * Validates if the date is a valid date. A valid date must be in the future, on a weekday, and within six months.
@@ -181,19 +183,10 @@ public class Date implements Comparable<Date> {
         try {
             dateToValidate.set(this.year, this.month - 1, this.day);
             dateToValidate.getTime();
+            return true;
         } catch (Exception e) {
             return false;
         }
-        if (this.isBeforeToday()) {
-            return false;
-        }
-        if (!this.isWeekday()) {
-            return false;
-        }
-        if (!this.isWithinSixMonths(this)) {
-            return false;
-        }
-        return true;
     }
 
 
@@ -223,16 +216,16 @@ public class Date implements Comparable<Date> {
 
     private static void testValid4() {
         Date date = new Date(2024, 2, 29);
-        System.out.println(date.toString() + " " + date.isValidDate());
+        System.out.println(date.toString() + " " + date.isBeforeToday());
     }
 
     private static void testValid5() {
         Date date = new Date(2028, 5, 30);
-        System.out.println(date.toString() + " " + date.isValidDate());
+        System.out.println(date.toString() + " " + date.isWithinSixMonths());
     }
 
     private static void testValid6() {
         Date date = new Date(2024, 10, 5);
-        System.out.println(date.toString() + " " + date.isValidDate());
+        System.out.println(date.toString() + " " + date.isWeekday());
     }
 }
