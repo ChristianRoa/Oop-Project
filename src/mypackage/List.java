@@ -16,7 +16,14 @@ public class List {
         this.appointments = new Appointment[4];
         this.size = 0;
     }
-
+    /*
+    Gets the number of appointments in the array
+    @return size
+     */
+    public int getSize() {
+        return size;
+    }
+    
     /**
      * Helper method that searches for a specific appointment in the array.
      *
