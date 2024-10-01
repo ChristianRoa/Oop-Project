@@ -1,5 +1,6 @@
 package mypackage;
 /**
+Enum class that represents the location and specifically the county and zip of the provider
  * @author Renil Khristi, Christian Roa
  */
 public enum Location {
