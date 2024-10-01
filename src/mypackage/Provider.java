@@ -1,5 +1,6 @@
 package mypackage;
 /**
+Enum class of the providers and their location & specialty
  * @author Renil Khristi, Christian Roa
  */
 public enum Provider {
@@ -15,15 +16,28 @@ public enum Provider {
     private final Location location;
     private final Specialty specialty;
 
+    /*
+    Constructor based on location and specialty
+    @param location
+    @param specialty
+     */
     Provider(Location location, Specialty specialty) {
         this.location = location;
         this.specialty = specialty;
     }
-    
+	
+    /*
+    Gets the location of the provider
+    @return location
+     */
     public Location getLocation() {
     	return location;
     }
-    
+
+    /*
+    Gets specialty of the provider
+    @return specialty
+     */
     public Specialty getSpecialty() {
     	return specialty;
     }

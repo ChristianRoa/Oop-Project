@@ -1,5 +1,6 @@
 package mypackage;
 /**
+Runs the schedule class to run the full project
  * @author Christian Roa, Renil Khristi
  */
 public class RunProject1 {
