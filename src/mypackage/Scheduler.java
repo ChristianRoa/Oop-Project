@@ -17,7 +17,7 @@ public class Scheduler {
         String command;
 
         while (true) {
-            System.out.print("");
+            System.out.print(" ");
             command = scanner.nextLine().trim();
 
             if (command.isEmpty()) {
@@ -114,9 +114,11 @@ public class Scheduler {
                 case 5: return Timeslot.SLOT5;
                 case 6: return Timeslot.SLOT6;
                 default:
+                    System.out.println(time + " is not a valid time slot."); // Invalid number
                     return null;
             }
         } catch (NumberFormatException e) {
+            System.out.println(timeString + " is not a valid time slot."); // Non-numeric input
             return null;
         }
     }
@@ -133,6 +135,7 @@ public class Scheduler {
             case "RAMESH": return Provider.RAMESH;
             case "CERAVOLO": return Provider.CERAVOLO;
             default:
+                System.out.println(providerName + " is not a valid provider.");
                 return null;
         }
     }
@@ -151,26 +154,15 @@ public class Scheduler {
         Profile patient = new Profile(firstName, lastName, parseDate(dobString));
         Provider provider = parseProvider(providerName);
 
-        if (timeslot == null) {
-            System.out.println(timeslotStr + " is not a valid timeslot.");
+        Appointment a = new Appointment(appointmentDate, timeslot, patient, provider);
+        if (isInvalidAppointment(a)) {
             return;
-        }
-        if (provider == null) {
-            System.out.println(providerName + " - provider doesn't exist.");
-            return;
-        }
-
-        Appointment appointment = new Appointment(appointmentDate, timeslot, patient, provider);
-
-        if (isInvalidAppointment(appointment)) {
-            return;
+        } else {
+            appointments.add(a);
+            System.out.println(a + " booked.");
         }
 
-        // Add the valid appointment to the list
-        appointments.add(appointment);
-        System.out.println(appointment + " booked.");
     }
-
 
     private void cancelAppointment(StringTokenizer st) {
         String dateString = st.nextToken();
@@ -215,12 +207,12 @@ public class Scheduler {
     }
 
     private void displayAppointmentsSortedByDate() {
-        System.out.println("** Appointments ordered by date/time/provider **");
+        System.out.println("** Appointments ordered by county/date/time **");
         appointments.printByAppointment();
     }
 
     private void displayAppointmentsSortedByPatient() {
-        System.out.println("** Appointments ordered by patient/date/time **");
+        System.out.println("** Appointments ordered by county/date/time **");
         appointments.printByPatient();
     }
 
