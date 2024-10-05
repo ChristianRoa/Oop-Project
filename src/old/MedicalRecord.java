@@ -1,4 +1,7 @@
-package mypackage;
+package old;
+
+import mypackage.Patient;
+
 /**
 Creates a medical record comprising of a bag of patients 
  * @author Renil Khristi, Christian Roa

@@ -1,4 +1,5 @@
-package mypackage;
+package old;
+
 /**
 Runs the schedule class to run the full project
  * @author Christian Roa, Renil Khristi

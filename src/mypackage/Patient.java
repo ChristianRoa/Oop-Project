@@ -3,15 +3,15 @@ package mypackage;
 Creates and defines patients based on their profile and visits
  * @author Renil Khristi, Christian Roa
  */
-public class Patient implements Comparable<Patient> {
-    private Profile profile;
+public class Patient extends Person {
+    private Person profile;
     private Visit visits; //a linked list of visits (completed appt.)
     /*
     Creates the patient constructor 
     @param profile of patient
     @param visits of patient
      */
-    Patient(Profile profile, Visit visits) {
+    Patient(Person profile, Visit visits) {
     	this.profile = profile;
     	this.visits = visits;
     }

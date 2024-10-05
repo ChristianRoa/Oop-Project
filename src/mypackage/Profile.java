@@ -1,4 +1,7 @@
 package mypackage;
+
+import utilities.Date;
+
 /**
 Creates a class for profiles that are composed of the date along with the first and last name of the patient
  * @author Renil Khristi, Christian Roa

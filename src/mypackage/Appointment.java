@@ -1,13 +1,16 @@
 package mypackage;
+
+import utilities.Date;
+
 /**
  * This class models an appointment with attributes for date, timeslot, patient, and provider.
  * @author Christian Roa, Renil Khristi
  */
 public class Appointment implements Comparable<Appointment> {
-    private Date date;
-    private Timeslot timeslot;
-    private Profile patient;
-    private Provider provider;
+    protected Date date;
+    protected Timeslot timeslot;
+    protected Person patient;
+    protected Person provider;
 
     /**
      * Constructor to create an Appointment object with the given date, timeslot, patient, and provider.
@@ -17,7 +20,7 @@ public class Appointment implements Comparable<Appointment> {
      * @param patient  the patient associated with the appointment
      * @param provider the provider for the appointment
      */
-    public Appointment(Date date, Timeslot timeslot, Profile patient, Provider provider) {
+    public Appointment(Date date, Timeslot timeslot, Person patient, Person provider) {
         this.date = date;
         this.timeslot = timeslot;
         this.patient = patient;
@@ -48,7 +51,7 @@ public class Appointment implements Comparable<Appointment> {
      *
      * @return the patient profile
      */
-    public Profile getPatient() {
+    public Person getPatient() {
         return patient;
     }
 
@@ -57,7 +60,7 @@ public class Appointment implements Comparable<Appointment> {
      *
      * @return the provider of the appointment
      */
-    public Provider getProvider() {
+    public Person getProvider() {
         return provider;
     }
 
@@ -84,7 +87,7 @@ public class Appointment implements Comparable<Appointment> {
      *
      * @param patient the new patient profile
      */
-    public void setPatient(Profile patient) {
+    public void setPatient(Person patient) {
         this.patient = patient;
     }
 
@@ -93,7 +96,7 @@ public class Appointment implements Comparable<Appointment> {
      *
      * @param provider the new provider of the appointment
      */
-    public void setProvider(Provider provider) {
+    public void setProvider(Person provider) {
         this.provider = provider;
     }
 
@@ -149,41 +152,4 @@ public class Appointment implements Comparable<Appointment> {
         }
         return false;
     }
-
-   /* public static void main(String[] args) {
-        testCompare();
-        testEquals();
-        testToString();
-    }
-
-    private static void testCompare(){
-        Date date1 = new Date(1999, 5, 17);
-        Date date2 = new Date(date1.getYear(), date1.getMonth(), date1.getDay());
-        Profile patient1 = new Profile("chris", "roa", date1);
-        Profile patient2 = new Profile("renil", "kristi", date2);
-
-        Appointment app1 = new Appointment(date1, Timeslot.SLOT2, patient1, Provider.PATEL);
-        Appointment app2 = new Appointment(date2, Timeslot.SLOT2, patient1, Provider.PATEL);
-
-        System.out.println("Equality: " + app1.compareTo(app2));
-    }
-    private static void testEquals(){
-        Date date1 = new Date(1999, 5, 17);
-        Date date2 = new Date(date1.getYear(), date1.getMonth(), date1.getDay());
-        Profile patient1 = new Profile("chris", "roa", date1);
-        Profile patient2 = new Profile("renil", "kristi", date2);
-
-        Appointment app1 = new Appointment(date1, Timeslot.SLOT2, patient1, Provider.PATEL);
-        Appointment app2 = new Appointment(date2, Timeslot.SLOT2, patient1, Provider.HARPER);
-
-        System.out.println("Equality: " + app1.equals(app2));
-    }
-
-    private static void testToString(){
-        Date date1 = new Date(1999, 5, 17);
-        Profile patient1 = new Profile("chris", "roa", date1);
-        Appointment app = new Appointment(date1, Timeslot.SLOT2, patient1, Provider.PATEL);
-        System.out.println(app.toString());
-
-    } */
 }
