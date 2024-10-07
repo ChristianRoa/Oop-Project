@@ -7,4 +7,9 @@ public class Technician extends Provider {
         super(profile, location);
         this.ratePerVisit = ratePerVisit;
     }
+
+    @Override
+    public int rate(){
+        return ratePerVisit;
+    }
 }

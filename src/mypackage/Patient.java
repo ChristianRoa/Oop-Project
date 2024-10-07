@@ -52,7 +52,7 @@ public class Patient extends Person {
     public int charge() {
     	int charge = 0;;
     	while(visits.getNext()!=null) {
-    		charge += visits.getAppointment().getProvider().getSpecialty().getCharge();
+    		charge += visits.getAppointment().getProvider().rate();
     		visits = visits.getNext();
     	}
     	return charge;

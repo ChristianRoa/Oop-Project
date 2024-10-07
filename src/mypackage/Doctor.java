@@ -11,8 +11,9 @@ public class Doctor extends Provider {
 
     }
 
-    public void rate(){
-
+    @Override
+    public int rate(){
+        return this.specialty.getCharge();
     }
 
 
