@@ -1,69 +1,60 @@
 package utilities;
 
-import java.util.Iterator;
-
 /**
  * This class represents a list of objects.
- * @author Christian Roadw
+ * @author Christian Roa
  */
 public class List<E> implements Iterable<E> {
     private E[] objects;
     private int size;
-    private static final int NOT_FOUND = -1;
-    private static final int GROWTH_INCREMENT = 4;
 
+    @SuppressWarnings("unchecked")
     public List() {
-        this.objects = (E[]) new Object[GROWTH_INCREMENT];
+        this.objects = (E[]) new Object[4]; // default capacity of 4
         this.size = 0;
     }
 
-    public int getSize() {
-        return size;
-    }
-
     private int find(E e) {
-        for (int i = 0; i < this.size; i++) {
-            if (this.objects[i].equals(e)) {
+        for (int i = 0; i < size; i++) {
+            if (objects[i].equals(e)) {
                 return i;
             }
         }
-        return NOT_FOUND;
+        return -1;
     }
 
+    @SuppressWarnings("unchecked")
     private void grow() {
-        E[] newObjects = (E[]) new Object[this.objects.length + GROWTH_INCREMENT];
-        System.arraycopy(this.objects, 0, newObjects, 0, this.size);
-        this.objects = newObjects;
+        E[] newObjects = (E[]) new Object[objects.length * 2];
+        System.arraycopy(objects, 0, newObjects, 0, objects.length);
+        objects = newObjects;
     }
 
     public boolean contains(E e) {
-        return find(e) != NOT_FOUND;
+        return find(e) != -1;
     }
 
     public void add(E e) {
-        if (this.objects.length == this.size) {
-            this.grow();
+        if (size == objects.length) {
+            grow();
         }
-        this.objects[this.size++] = e;
+        objects[size++] = e;
     }
 
     public void remove(E e) {
         int index = find(e);
-        if (index == NOT_FOUND) {
-            return;
+        if (index != -1) {
+            objects[index] = objects[--size];
+            objects[size] = null;
         }
-        for (int i = index; i < this.size - 1; i++) {
-            objects[i] = this.objects[i + 1];
-        }
-        this.objects[--this.size] = null;
     }
 
     public boolean isEmpty() {
-        return this.size == 0;
+        return size == 0;
     }
 
     public int size() {
-        return getSize();
+        return size;
     }
 
     public Iterator<E> iterator() {
@@ -71,17 +62,18 @@ public class List<E> implements Iterable<E> {
     }
 
     public E get(int index) {
-        if (index < 0 || index >= size) {
-            throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
+        if (index >= 0 && index < size) {
+            return objects[index];
         }
-        return objects[index];
+        throw new IndexOutOfBoundsException("Index out of bounds.");
     }
 
     public void set(int index, E e) {
-        if (index < 0 || index >= size) {
-            throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
+        if (index >= 0 && index < size) {
+            objects[index] = e;
+        } else {
+            throw new IndexOutOfBoundsException("Index out of bounds.");
         }
-        objects[index] = e;
     }
 
     public int indexOf(E e) {
@@ -91,17 +83,15 @@ public class List<E> implements Iterable<E> {
     private class ListIterator implements Iterator<E> {
         private int currentIndex = 0;
 
-        @Override
         public boolean hasNext() {
             return currentIndex < size;
         }
 
-        @Override
         public E next() {
-            if (!hasNext()) {
-                throw new java.util.NoSuchElementException();
+            if (hasNext()) {
+                return objects[currentIndex++];
             }
-            return objects[currentIndex++];
+            throw new NoSuchElementException();
         }
     }
 }

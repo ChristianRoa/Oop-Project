@@ -8,4 +8,10 @@ public class Imaging extends Appointment{
         super(date, timeslot, patient, provider);
         this.room = room;
     }
+    public Radiology getRoom() {
+        return room;
+    }
+    public void setRoom(Radiology room) {
+        this.room = room;
+    }
 }

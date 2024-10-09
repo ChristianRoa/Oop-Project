@@ -50,12 +50,17 @@ public class Patient extends Person {
     @return charge 
      */
     public int charge() {
-    	int charge = 0;;
-    	while(visits.getNext()!=null) {
-    		charge += visits.getAppointment().getProvider().rate();
-    		visits = visits.getNext();
-    	}
-    	return charge;
+        int totalCharge = 0;
+        Visit currentVisit = visits;
+        while (currentVisit != null) {
+            Person provider = currentVisit.getAppointment().getProvider();
+            if (provider instanceof Provider) {
+                totalCharge += ((Provider) provider).rate();
+            }
+            currentVisit = currentVisit.getNext();
+        }
+
+        return totalCharge;
     }
 
     /*
