@@ -21,5 +21,7 @@ public abstract class Provider extends Person {
     }
 
     public abstract int rate();
+    public int getRate() {
+        return rate();  // Calls the overridden method in the subclass
+    }
 }
-

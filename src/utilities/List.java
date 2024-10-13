@@ -1,17 +1,16 @@
 package utilities;
+import java.util.Iterator;
 
-/**
- * This class represents a list of objects.
- * @author Christian Roa
- */
 public class List<E> implements Iterable<E> {
     private E[] objects;
     private int size;
+    private static final int DEFAULT_CAPACITY = 4;
+    private static final int untrue = -1;
 
     @SuppressWarnings("unchecked")
     public List() {
-        this.objects = (E[]) new Object[4]; // default capacity of 4
-        this.size = 0;
+        objects = (E[]) new Object[DEFAULT_CAPACITY];
+        size = 0;
     }
 
     private int find(E e) {
@@ -23,15 +22,15 @@ public class List<E> implements Iterable<E> {
         return -1;
     }
 
-    @SuppressWarnings("unchecked")
     private void grow() {
+        @SuppressWarnings("unchecked")
         E[] newObjects = (E[]) new Object[objects.length * 2];
-        System.arraycopy(objects, 0, newObjects, 0, objects.length);
+        System.arraycopy(objects, 0, newObjects, 0, size);
         objects = newObjects;
     }
 
     public boolean contains(E e) {
-        return find(e) != -1;
+        return find(e) != untrue;
     }
 
     public void add(E e) {
@@ -43,9 +42,9 @@ public class List<E> implements Iterable<E> {
 
     public void remove(E e) {
         int index = find(e);
-        if (index != -1) {
-            objects[index] = objects[--size];
-            objects[size] = null;
+        if (index != untrue) {
+            System.arraycopy(objects, index + 1, objects, index, size - index - 1);
+            size--;
         }
     }
 
@@ -62,18 +61,17 @@ public class List<E> implements Iterable<E> {
     }
 
     public E get(int index) {
-        if (index >= 0 && index < size) {
-            return objects[index];
+        if (index < 0 || index >= size) {
+            throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
         }
-        throw new IndexOutOfBoundsException("Index out of bounds.");
+        return objects[index];
     }
 
     public void set(int index, E e) {
-        if (index >= 0 && index < size) {
-            objects[index] = e;
-        } else {
-            throw new IndexOutOfBoundsException("Index out of bounds.");
+        if (index < 0 || index >= size) {
+            throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
         }
+        objects[index] = e;
     }
 
     public int indexOf(E e) {
@@ -88,11 +86,10 @@ public class List<E> implements Iterable<E> {
         }
 
         public E next() {
-            if (hasNext()) {
-                return objects[currentIndex++];
+            if (!hasNext()) {
+                throw new RuntimeException("No more elements in the iterator.");
             }
-            throw new NoSuchElementException();
+            return objects[currentIndex++];
         }
     }
 }
-

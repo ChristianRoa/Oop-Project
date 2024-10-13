@@ -55,6 +55,12 @@ public class Appointment implements Comparable<Appointment> {
         return patient;
     }
 
+    public Patient getPatientasPatient() {
+        if (patient instanceof Patient) {
+            return (Patient) patient;
+        }
+        return null; // In case the provider is not a Provider instance
+    }
     /**
      * Retrieves the provider of the appointment.
      *
@@ -62,6 +68,17 @@ public class Appointment implements Comparable<Appointment> {
      */
     public Person getProvider() {
         return provider;
+    }
+
+    /**
+     * Returns the provider as a Provider object if the provider is indeed a Provider,
+     * otherwise returns null.
+     */
+    public Provider getProviderAsProvider() {
+        if (provider instanceof Provider) {
+            return (Provider) provider;
+        }
+        return null; // In case the provider is not a Provider instance
     }
 
     /**
