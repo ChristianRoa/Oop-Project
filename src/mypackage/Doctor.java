@@ -16,5 +16,11 @@ public class Doctor extends Provider {
         return this.specialty.getCharge();
     }
 
+    public Specialty getSpecialty() {
+        return specialty;
+    }
 
+    public String getNpi() {
+        return npi;
+    }
 }

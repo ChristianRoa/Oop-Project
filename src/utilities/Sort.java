@@ -2,10 +2,9 @@ package utilities;
 import mypackage.Appointment;
 import mypackage.Provider;
 import mypackage.Imaging;
-public class Sort {
+import mypackage.Technician;
 
-    // Bubble sort appointments by date, time, then provider's name
-    // Bubble sort appointments by date, time, then provider's name
+public class Sort {
     private static void sortByApp(List<Appointment> list) {
         int n = list.size();
         for (int i = 0; i < n - 1; i++) {
@@ -31,8 +30,6 @@ public class Sort {
         }
     }
 
-
-    // Bubble sort appointments by patient details
     private static void sortByPatient(List<Appointment> list) {
         int n = list.size();
         for (int i = 0; i < n - 1; i++) {
@@ -62,7 +59,6 @@ public class Sort {
         }
     }
 
-
     private static void sortByLocation(List<Appointment> list){
         int n = list.size();
         for (int i = 0; i < n - 1; i++) {
@@ -89,50 +85,29 @@ public class Sort {
     }
 
     private static void sortOfficeByLocation(List<Appointment> list) {
-        // Create a temporary list to hold Imaging appointments
-        List<Appointment> officeList = new List<>();
-
-        // Filter for Imaging appointments
-        for (Appointment appointment : list) {
-            if (!(appointment instanceof Imaging)) {
-                officeList.add(appointment);
-            }
-        }
-        int n = officeList.size();
+        int n = list.size();
         for (int i = 0; i < n - 1; i++) {
             for (int j = 0; j < n - i - 1; j++) {
-                Appointment a1 = officeList.get(j);
-                Appointment a2 = officeList.get(j + 1);
-
-                // Compare by provider's county, date, then timeslot
+                Appointment a1 = list.get(j);
+                Appointment a2 = list.get(j + 1);
                 int countyCompare = a1.getProviderAsProvider().getLocation().getCounty().compareTo(a2.getProviderAsProvider().getLocation().getCounty());
                 if (countyCompare > 0 ||
                         (countyCompare == 0 && a1.getDate().compareTo(a2.getDate()) > 0) ||
                         (countyCompare == 0 && a1.getDate().compareTo(a2.getDate()) == 0 && a1.getTimeslot().compareTo(a2.getTimeslot()) > 0)) {
-                    // Swap if any comparison indicates a1 > a2
-                    Appointment temp = officeList.get(j);
-                    officeList.set(j, officeList.get(j + 1));
-                    officeList.set(j + 1, temp);
+                    Appointment temp = list.get(j);
+                    list.set(j, list.get(j + 1));
+                    list.set(j + 1, temp);
                 }
             }
         }
     }
 
     private static void sortImagingByLocation(List<Appointment> list) {
-        // Create a temporary list to hold Imaging appointments
-        List<Imaging> imagingList = new List<>();
-
-        // Filter for Imaging appointments
-        for (Appointment appointment : list) {
-            if (appointment instanceof Imaging) {
-                imagingList.add((Imaging) appointment);
-            }
-        }
-        int n = imagingList.size();
+        int n = list.size();
         for (int i = 0; i < n - 1; i++) {
             for (int j = 0; j < n - i - 1; j++) {
-                Imaging a1 = imagingList.get(j);
-                Imaging a2 = imagingList.get(j + 1);
+                Imaging a1 = list.get(j);
+                Imaging a2 = list.get(j + 1);
 
                 // Compare by provider's county, date, then timeslot
                 int countyCompare = a1.getProviderAsProvider().getLocation().getCounty().compareTo(a2.getProviderAsProvider().getLocation().getCounty());
@@ -140,9 +115,25 @@ public class Sort {
                         (countyCompare == 0 && a1.getDate().compareTo(a2.getDate()) > 0) ||
                         (countyCompare == 0 && a1.getDate().compareTo(a2.getDate()) == 0 && a1.getTimeslot().compareTo(a2.getTimeslot()) > 0)) {
                     // Swap if any comparison indicates a1 > a2
-                    Imaging temp = imagingList.get(j);
-                    imagingList.set(j, imagingList.get(j + 1));
-                    imagingList.set(j + 1, temp);
+                    Imaging temp = list.get(j);
+                    list.set(j, list.get(j + 1));
+                    list.set(j + 1, temp);
+                }
+            }
+        }
+    }
+
+    private static void sortProviderProfile(List<Appointment> list) {
+        int n = list.size();
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = 0; j < n - i - 1; j++) {
+                Appointment a1 = list.get(j);
+                Appointment a2 = list.get(j + 1);
+
+                if(a1.getProvider().getProfile().compareTo(a2.getProvider().getProfile()) > 0){
+                    Appointment temp = list.get(j);
+                    list.set(j, list.get(j + 1));
+                    list.set(j + 1, temp);
                 }
             }
         }
@@ -168,13 +159,30 @@ public class Sort {
             case 'I':
                 sortImagingByLocation(list);
                 break;
+            case 'C':
+                sortProviderProfile(list);
+                break;
             default:
                 throw new IllegalArgumentException("Invalid key");
         }
     }
+    private static void sortProviders(List<Provider> list){
+        int n = list.size();
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = 0; j < n - i - 1; j++) {
+                Provider p1 = list.get(j);
+                Provider p2 = list.get(j + 1);
 
+                if(p1.getProfile().compareTo(p2.getProfile()) > 0){
+                    Provider temp = list.get(j);
+                    list.set(j, list.get(j + 1));
+                    list.set(j + 1, temp);
+                }
+            }
+        }
+    }
 
-    public static void provider(List<Provider> list){
-
+    public static void provider(List<Provider> list) {
+    sortProviders(list);
     }
 }

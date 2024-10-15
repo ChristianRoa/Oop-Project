@@ -25,6 +25,14 @@ public class Timeslot implements Comparable<Timeslot> {
         return false;
     }
 
+    public static Timeslot getTimeSlot(int index) {
+        if (index < 1 || index > validTimeslots.length) {
+            return null; // Return null if the index is out of bounds
+        }
+        int[] timeslot = validTimeslots[index - 1]; // Convert to 0-based index
+        return new Timeslot(timeslot[0], timeslot[1]);
+    }
+
     @Override
     public int compareTo(Timeslot other) {
         if (this.hour != other.hour) {
@@ -38,4 +46,17 @@ public class Timeslot implements Comparable<Timeslot> {
     public String toString() {
         return String.format("%02d:%02d", hour, minute);
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        Timeslot other = (Timeslot) obj;
+        return this.hour == other.hour && this.minute == other.minute;
+    }
+
 }
