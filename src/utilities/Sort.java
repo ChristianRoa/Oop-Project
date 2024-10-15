@@ -66,12 +66,10 @@ public class Sort {
                 Appointment a1 = list.get(j);
                 Appointment a2 = list.get(j + 1);
 
-                // Compare providers by county
                 int countyCompare = a1.getProviderAsProvider().getLocation().getCounty().compareTo(a2.getProviderAsProvider().getLocation().getCounty());
                 if (countyCompare > 0 ||
                         (countyCompare == 0 && a1.getDate().compareTo(a2.getDate()) > 0) ||
                         (countyCompare == 0 && a1.getDate().compareTo(a2.getDate()) == 0 && a1.getTimeslot().compareTo(a2.getTimeslot()) > 0)) {
-                    // Swap if county comparison or other criteria indicate a1 > a2
                     Appointment temp = list.get(j);
                     list.set(j, list.get(j + 1));
                     list.set(j + 1, temp);
@@ -82,45 +80,6 @@ public class Sort {
 
     private static void sortBill(List<Appointment> list) {
 
-    }
-
-    private static void sortOfficeByLocation(List<Appointment> list) {
-        int n = list.size();
-        for (int i = 0; i < n - 1; i++) {
-            for (int j = 0; j < n - i - 1; j++) {
-                Appointment a1 = list.get(j);
-                Appointment a2 = list.get(j + 1);
-                int countyCompare = a1.getProviderAsProvider().getLocation().getCounty().compareTo(a2.getProviderAsProvider().getLocation().getCounty());
-                if (countyCompare > 0 ||
-                        (countyCompare == 0 && a1.getDate().compareTo(a2.getDate()) > 0) ||
-                        (countyCompare == 0 && a1.getDate().compareTo(a2.getDate()) == 0 && a1.getTimeslot().compareTo(a2.getTimeslot()) > 0)) {
-                    Appointment temp = list.get(j);
-                    list.set(j, list.get(j + 1));
-                    list.set(j + 1, temp);
-                }
-            }
-        }
-    }
-
-    private static void sortImagingByLocation(List<Appointment> list) {
-        int n = list.size();
-        for (int i = 0; i < n - 1; i++) {
-            for (int j = 0; j < n - i - 1; j++) {
-                Imaging a1 = list.get(j);
-                Imaging a2 = list.get(j + 1);
-
-                // Compare by provider's county, date, then timeslot
-                int countyCompare = a1.getProviderAsProvider().getLocation().getCounty().compareTo(a2.getProviderAsProvider().getLocation().getCounty());
-                if (countyCompare > 0 ||
-                        (countyCompare == 0 && a1.getDate().compareTo(a2.getDate()) > 0) ||
-                        (countyCompare == 0 && a1.getDate().compareTo(a2.getDate()) == 0 && a1.getTimeslot().compareTo(a2.getTimeslot()) > 0)) {
-                    // Swap if any comparison indicates a1 > a2
-                    Imaging temp = list.get(j);
-                    list.set(j, list.get(j + 1));
-                    list.set(j + 1, temp);
-                }
-            }
-        }
     }
 
     private static void sortProviderProfile(List<Appointment> list) {
@@ -147,17 +106,11 @@ public class Sort {
             case 'P':
                 sortByPatient(list);
                 break;
-            case 'L':
+            case 'L', 'O', 'I':
                 sortByLocation(list);
                 break;
             case 'S':
                 sortBill(list);
-                break;
-            case 'O':
-                sortOfficeByLocation(list);
-                break;
-            case 'I':
-                sortImagingByLocation(list);
                 break;
             case 'C':
                 sortProviderProfile(list);
