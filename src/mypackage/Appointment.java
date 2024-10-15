@@ -151,7 +151,7 @@ public class Appointment implements Comparable<Appointment> {
      */
     @Override
     public String toString() {
-        return this.date.toString() + " " + this.timeslot + " " + this.patient.toString() + " [" + this.provider.toString() + "]";
+        return this.date.toString() + " " + this.timeslot + " " + this.patient.toString() + " " + this.provider.toString();
     }
 
     /**

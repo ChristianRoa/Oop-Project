@@ -28,4 +28,10 @@ public class Person implements Comparable<Person>{
        }
        return this.getProfile().dob().compareTo(person.getProfile().dob());
     }
+
+    @Override
+    public String toString() {
+        return this.profile.getFname() + " " + this.profile.getLname() + " " + this.profile.dob();
+    }
+
 }

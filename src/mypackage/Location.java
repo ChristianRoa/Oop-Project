@@ -4,12 +4,12 @@ Enum class that represents the location and specifically the county and zip of t
  * @author Renil Khristi, Christian Roa
  */
 public enum Location {
-    BRIDGEWATER("Somerset County", "08807"), 
-    EDISON("Middlesex County", "08817"), 
-    PISCATAWAY("Middlesex County", "08854"), 
-    PRINCETON("Mercer County", "08542"),
-    MORRISTOWN("Morris County", "07960"),
-    CLARK("Union County", "07066");
+    BRIDGEWATER("Somerset", "08807"),
+    EDISON("Middlesex", "08817"),
+    PISCATAWAY("Middlesex", "08854"),
+    PRINCETON("Mercer", "08542"),
+    MORRISTOWN("Morris", "07960"),
+    CLARK("Union", "07066");
 
     private final String county;
     private final String zip;

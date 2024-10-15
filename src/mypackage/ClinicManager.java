@@ -1,11 +1,4 @@
 package mypackage;
-
-import mypackage.Appointment;
-import mypackage.Profile;
-import mypackage.Person;
-import mypackage.Provider;
-import mypackage.Timeslot;
-import mypackage.Location;
 import utilities.CircularLinkedList;
 import utilities.Date;
 import utilities.List;
@@ -22,11 +15,15 @@ public class ClinicManager {
     private List<Appointment> imagingApps;
     private List<Provider> providers;
     private CircularLinkedList rotationList = new CircularLinkedList();
+    private CircularLinkedList.CircularNode trackingNode = rotationList.getHead();
 
     public ClinicManager() {
         scanner = new Scanner(System.in);
         appointments = new List<>();
         providers = new List<>();
+        officeApps = new List<>();
+        imagingApps = new List<>();
+
     }
 
     public void run() {
@@ -106,7 +103,7 @@ public class ClinicManager {
     private void fillProviders(){
         try {
             // Using Scanner to read the file
-            Scanner fileScanner = new Scanner(new File("providers.txt"));
+            Scanner fileScanner = new Scanner(new File("C:\\Users\\croaa\\IdeaProjects\\OOPproject\\src\\providers.txt"));
             while (fileScanner.hasNextLine()) {
                 String line = fileScanner.nextLine().trim();
                 if (line.isEmpty()) {
@@ -144,18 +141,14 @@ public class ClinicManager {
     }
     private void printProviders(){
         for (Provider provider : providers) {
-            if (provider instanceof Doctor) {
-                System.out.println(provider.getProfile().toString() + " " + provider.getLocation().toString() + "] [" + ((Doctor) provider).getSpecialty() + ", #" + ((Doctor) provider).getNpi() + "]");
-            }
-            else if (provider instanceof Technician) {
-                System.out.println(provider.getProfile().toString() + " " + provider.getLocation().toString() + "] [rate: $" +(double) provider.getRate() + "]");
-            }
-            System.out.println();
+            System.out.println(provider.toString());
         }
     }
     private void fillRotationList(List<Provider> list){
         for (Provider provider : list) {
-            rotationList.add(provider);
+            if(provider instanceof Technician){
+                rotationList.add(provider);
+            }
         }
     }
 
@@ -209,22 +202,15 @@ public class ClinicManager {
         // Convert to uppercase to handle case-insensitivity
         locationString = locationString.toUpperCase().trim();
 
-        switch (locationString) {
-            case "BRIDGEWATER":
-                return Location.BRIDGEWATER;
-            case "EDISON":
-                return Location.EDISON;
-            case "PISCATAWAY":
-                return Location.PISCATAWAY;
-            case "PRINCETON":
-                return Location.PRINCETON;
-            case "MORRISTOWN":
-                return Location.MORRISTOWN;
-            case "CLARK":
-                return Location.CLARK;
-            default:
-                return null;
-        }
+        return switch (locationString) {
+            case "BRIDGEWATER" -> Location.BRIDGEWATER;
+            case "EDISON" -> Location.EDISON;
+            case "PISCATAWAY" -> Location.PISCATAWAY;
+            case "PRINCETON" -> Location.PRINCETON;
+            case "MORRISTOWN" -> Location.MORRISTOWN;
+            case "CLARK" -> Location.CLARK;
+            default -> null;
+        };
     }
 
     private Specialty parseSpecialty(String specialtyString) {
@@ -232,19 +218,14 @@ public class ClinicManager {
             return null;
         }
 
-        // Convert to uppercase to handle case-insensitivity
         specialtyString = specialtyString.toUpperCase().trim();
 
-        switch (specialtyString) {
-            case "FAMILY":
-                return Specialty.FAMILY;
-            case "PEDIATRICIAN":
-                return Specialty.PEDIATRICIAN;
-            case "ALLERGIST":
-                return Specialty.ALLERGIST;
-            default:
-                return null;
-        }
+        return switch (specialtyString) {
+            case "FAMILY" -> Specialty.FAMILY;
+            case "PEDIATRICIAN" -> Specialty.PEDIATRICIAN;
+            case "ALLERGIST" -> Specialty.ALLERGIST;
+            default -> null;
+        };
     }
 
     private void scheduleDocApp(StringTokenizer st) {
@@ -253,34 +234,46 @@ public class ClinicManager {
         String firstName = st.nextToken();
         String lastName = st.nextToken();
         String dobString = st.nextToken();
-        String providerName = st.nextToken();
+        String doctorNPI = st.nextToken();
 
         Date appointmentDate = parseDate(dateString);
         Timeslot timeslot = Timeslot.getTimeSlot(Integer.parseInt(timeslotStr));
         Person patient = new Person(new Profile(firstName, lastName, parseDate(dobString)));
-        Person provider = new Person(new Profile(firstName, lastName, parseDate(dobString)));
+        Person provider = null;
+        for(Provider p : providers){
+            if(p instanceof  Doctor){
+                if(((Doctor) p).getNpi().equals(doctorNPI)){
+                    provider = p;
+                    break;
+                }
+            }
+        }
+        if(provider == null){
+            System.out.println("Provider not found.");
+            return;
+        }
 
         if (timeslot == null) {
             System.out.println(timeslotStr + " is not a valid timeslot.");
             return;
         }
-        if (provider == null) {
-            System.out.println(providerName + " - provider doesn't exist.");
-            return;
-        }
 
         Appointment appointment = new Appointment(appointmentDate, timeslot, patient, provider);
-
-        if (isInvalidAppointment(appointment)) {
-            return;
-        }
-        if(isInvalidAppointment(patient)){
-            return;
-        }
 
         // Add the valid appointment to the list
         appointments.add(appointment);
         System.out.println(appointment + " booked.");
+    }
+
+    private boolean techAvailabilityChecker(Provider p, Timeslot timeslot) {
+        for (Appointment a : appointments) {
+            if(a.getProvider() instanceof Technician && a.getProviderAsProvider().equals(p)){
+                if(a.getTimeslot().equals(timeslot)){
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     private void scheduleTechApp(StringTokenizer st) {
@@ -289,34 +282,23 @@ public class ClinicManager {
         String firstName = st.nextToken();
         String lastName = st.nextToken();
         String dobString = st.nextToken();
-        String providerName = st.nextToken();
+        String imagingService = st.nextToken();
 
         Date appointmentDate = parseDate(dateString);
-        Timeslot timeslot = parseTime(timeslotStr);
-        Profile patient = new Profile(firstName, lastName, parseDate(dobString));
-        Provider provider = parseProvider(providerName);
+        Timeslot timeslot = Timeslot.getTimeSlot(Integer.parseInt(timeslotStr));
+        Person patient = new Person(new Profile(firstName, lastName, parseDate(dobString)));
 
-        if (timeslot == null) {
-            System.out.println(timeslotStr + " is not a valid timeslot.");
-            return;
+        CircularLinkedList.CircularNode temp = trackingNode;
+        trackingNode = trackingNode.getNext();
+        while(trackingNode!=temp){
+            if(techAvailabilityChecker(trackingNode.getData(), timeslot)){
+                Appointment appointment = new Appointment(appointmentDate, timeslot, patient, trackingNode.getData());
+                appointments.add(appointment);
+                System.out.println(appointment + " booked.");
+                return;
+            }
+            trackingNode = trackingNode.getNext();
         }
-        if (provider == null) {
-            System.out.println(providerName + " - provider doesn't exist.");
-            return;
-        }
-
-        Appointment appointment = new Appointment(appointmentDate, timeslot, patient, provider);
-
-        if (isInvalidAppointment(appointment)) {
-            return;
-        }
-        if(isInvalidAppointment(patient)){
-            return;
-        }
-
-        // Add the valid appointment to the list
-        appointments.add(appointment);
-        System.out.println(appointment + " booked.");
     }
 
     private void cancelAppointment(StringTokenizer st) {
@@ -325,16 +307,15 @@ public class ClinicManager {
         String firstName = st.nextToken();
         String lastName = st.nextToken();
         String dobString = st.nextToken();
-        String providerName = st.nextToken();
+        Person canceler = new Person(new Profile(firstName, lastName, parseDate(dobString)));
 
-        Date appointmentDate = parseDate(dateString);
-        Profile patient = new Profile(firstName, lastName, parseDate(dobString));
+        Appointment temp = new Appointment(parseDate(dateString), Timeslot.getTimeSlot(Integer.parseInt(timeslotStr)), canceler, null);
 
-        Appointment a = new Appointment(appointmentDate, parseTime(timeslotStr), patient, parseProvider(providerName));
-        if(!appointments.contains(a)){
-            System.out.println(a.toString() + " does not exist.");
+        for(Appointment a : appointments){
+            if(a.getDate().equals(temp.getDate()) && a.getTimeslot().equals(temp.getTimeslot()) && a.getPatient().equals(temp.getPatient())){
+                appointments.remove(a);
+            }
         }
-        appointments.remove(a);
     }
 
     private void rescheduleAppointment(StringTokenizer st) {
@@ -343,22 +324,24 @@ public class ClinicManager {
         String firstName = st.nextToken();
         String lastName = st.nextToken();
         String dobString = st.nextToken();
-        String providerName = st.nextToken();
+        String newTimeslotStr = st.nextToken();
 
-        Date appointmentDate = parseDate(dateString);
-        Timeslot timeslot = parseTime(timeslotStr);
-        Profile patient = new Profile(firstName, lastName, parseDate(dobString));
-        Provider provider = parseProvider(providerName);
-
-        Appointment a = new Appointment(appointmentDate, timeslot, patient, provider);
-        if(!appointments.contains(a)){
-            System.out.println(a.toString() + " does not exist.");
-            return;
+        Appointment comparer = new Appointment(null, null, null, null);
+        Appointment temp = new Appointment(parseDate(dateString), Timeslot.getTimeSlot(Integer.parseInt(timeslotStr)), new Person(new Profile(firstName, lastName, parseDate(dobString))), null);
+        for(Appointment a : appointments){
+            if(a.getDate().equals(temp.getDate()) && a.getTimeslot().equals(temp.getTimeslot()) && a.getPatient().equals(temp.getPatient())){
+                comparer = a;
+                break;
+            }
         }
-
+        if(!appointments.contains(comparer)){
+            System.out.println(comparer.toString() + " does not exist.");
+        }
         else{
-            appointments.remove(a);
+            appointments.remove(comparer);
+            Appointment rescheduledApp = new Appointment(comparer.getDate(), Timeslot.getTimeSlot(Integer.parseInt(newTimeslotStr)), comparer.getPatient(), comparer.getProvider());
         }
+
     }
 
     private void displaySortByApp(){
@@ -396,7 +379,6 @@ public class ClinicManager {
             System.out.println(officeApps.get(i).toString());
         }
     }
-
     private void fillImageApps(){
         for(Appointment a : imagingApps){
             if(a instanceof  Imaging){

@@ -16,6 +16,12 @@ public class Doctor extends Provider {
         return this.specialty.getCharge();
     }
 
+    @Override
+    public String toString() {
+        return  "[" + super.toString() +"] [" + this.specialty + ", #" + this.npi + "]";
+
+    }
+
     public Specialty getSpecialty() {
         return specialty;
     }
@@ -23,4 +29,5 @@ public class Doctor extends Provider {
     public String getNpi() {
         return npi;
     }
+
 }

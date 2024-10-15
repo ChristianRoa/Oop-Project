@@ -69,7 +69,7 @@ public class Patient extends Person {
      */
     @Override
     public String toString() {
-    	return this.profile.toString() + " " + visits.toString();
+    	return super.toString();
     }
 
     /*

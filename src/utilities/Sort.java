@@ -119,17 +119,28 @@ public class Sort {
                 throw new IllegalArgumentException("Invalid key");
         }
     }
-    private static void sortProviders(List<Provider> list){
+    private static void sortProviders(List<Provider> list) {
         int n = list.size();
         for (int i = 0; i < n - 1; i++) {
             for (int j = 0; j < n - i - 1; j++) {
                 Provider p1 = list.get(j);
                 Provider p2 = list.get(j + 1);
 
-                if(p1.getProfile().compareTo(p2.getProfile()) > 0){
+                // Compare last names
+                int lastNameComparison = p1.getProfile().getLname().compareTo(p2.getProfile().getLname());
+                if (lastNameComparison > 0) {
+                    // Swap if p1's last name is greater than p2's last name
                     Provider temp = list.get(j);
                     list.set(j, list.get(j + 1));
                     list.set(j + 1, temp);
+                } else if (lastNameComparison == 0) {
+                    // If last names are equal, compare locations
+                    if (p1.getLocation().compareTo(p2.getLocation()) > 0) {
+                        // Swap if p1's location is greater than p2's location
+                        Provider temp = list.get(j);
+                        list.set(j, list.get(j + 1));
+                        list.set(j + 1, temp);
+                    }
                 }
             }
         }

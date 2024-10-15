@@ -24,4 +24,8 @@ public abstract class Provider extends Person {
     public int getRate() {
         return rate();  // Calls the overridden method in the subclass
     }
+    @Override
+    public String toString() {
+        return super.toString() + ", " + location + ", " + location.getCounty() + " " + location.getZip();
+    }
 }
