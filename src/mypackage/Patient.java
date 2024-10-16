@@ -51,6 +51,9 @@ public class Patient extends Person {
      */
     public int charge() {
         int totalCharge = 0;
+        if (visits == null) {
+            return totalCharge;
+        }
         Visit currentVisit = visits;
         while (currentVisit != null) {
             Person provider = currentVisit.getAppointment().getProvider();
@@ -59,9 +62,9 @@ public class Patient extends Person {
             }
             currentVisit = currentVisit.getNext();
         }
-
         return totalCharge;
     }
+
 
     /*
     Displays information of the profile and visits

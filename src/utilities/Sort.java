@@ -82,21 +82,6 @@ public class Sort {
 
     }
 
-    private static void sortProviderProfile(List<Appointment> list) {
-        int n = list.size();
-        for (int i = 0; i < n - 1; i++) {
-            for (int j = 0; j < n - i - 1; j++) {
-                Appointment a1 = list.get(j);
-                Appointment a2 = list.get(j + 1);
-
-                if(a1.getProvider().getProfile().compareTo(a2.getProvider().getProfile()) > 0){
-                    Appointment temp = list.get(j);
-                    list.set(j, list.get(j + 1));
-                    list.set(j + 1, temp);
-                }
-            }
-        }
-    }
 
     public static void appointment(List<Appointment> list, char key){
         switch(key){
@@ -112,12 +97,12 @@ public class Sort {
             case 'S':
                 sortBill(list);
                 break;
-            case 'C':
-                sortProviderProfile(list);
-                break;
             default:
                 throw new IllegalArgumentException("Invalid key");
         }
+    }
+    private static void sortProviderProfile(List<Provider> list) {
+
     }
     private static void sortProviders(List<Provider> list) {
         int n = list.size();

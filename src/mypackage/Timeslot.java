@@ -25,11 +25,17 @@ public class Timeslot implements Comparable<Timeslot> {
         return false;
     }
 
-    public static Timeslot getTimeSlot(int index) {
-        if (index < 1 || index > validTimeslots.length) {
-            return null; // Return null if the index is out of bounds
+    public static Timeslot getTimeSlot(String indexStr) {
+        int index;
+        try {
+            index = Integer.parseInt(indexStr);
+        } catch (NumberFormatException e) {
+            return null;
         }
-        int[] timeslot = validTimeslots[index - 1]; // Convert to 0-based index
+        if (index < 1 || index > validTimeslots.length) {
+            return null;
+        }
+        int[] timeslot = validTimeslots[index - 1];
         return new Timeslot(timeslot[0], timeslot[1]);
     }
 
