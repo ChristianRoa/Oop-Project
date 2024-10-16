@@ -1,10 +1,22 @@
 package utilities;
+
 import mypackage.Appointment;
 import mypackage.Provider;
-import mypackage.Imaging;
-import mypackage.Technician;
 
+/**
+ * A utility class for sorting lists of appointments and providers.
+ * This class contains methods for sorting appointments by various keys
+ * such as date, patient details, and location, as well as sorting
+ * providers by their profiles.
+ */
 public class Sort {
+
+    /**
+     * Sorts the given list of appointments by appointment date, timeslot,
+     * provider's last name, and provider's first name.
+     *
+     * @param list the list of appointments to be sorted
+     */
     private static void sortByApp(List<Appointment> list) {
         int n = list.size();
         for (int i = 0; i < n - 1; i++) {
@@ -30,6 +42,12 @@ public class Sort {
         }
     }
 
+    /**
+     * Sorts the given list of appointments by patient details, including
+     * last name, first name, date of birth, appointment date, and timeslot.
+     *
+     * @param list the list of appointments to be sorted
+     */
     private static void sortByPatient(List<Appointment> list) {
         int n = list.size();
         for (int i = 0; i < n - 1; i++) {
@@ -59,7 +77,12 @@ public class Sort {
         }
     }
 
-    private static void sortByLocation(List<Appointment> list){
+    /**
+     * Sorts the given list of appointments by the location of the provider.
+     *
+     * @param list the list of appointments to be sorted
+     */
+    private static void sortByLocation(List<Appointment> list) {
         int n = list.size();
         for (int i = 0; i < n - 1; i++) {
             for (int j = 0; j < n - i - 1; j++) {
@@ -78,20 +101,33 @@ public class Sort {
         }
     }
 
+    /**
+     * Sorts the list of appointments based on billing criteria.
+     *
+     * @param list the list of appointments to be sorted
+     */
     private static void sortBill(List<Appointment> list) {
-
+        // Implementation needed for sorting by bill
     }
 
-
-    public static void appointment(List<Appointment> list, char key){
-        switch(key){
+    /**
+     * Sorts the list of appointments based on the specified key.
+     *
+     * @param list the list of appointments to be sorted
+     * @param key the key used to determine the sorting criteria
+     * @throws IllegalArgumentException if the key is invalid
+     */
+    public static void appointment(List<Appointment> list, char key) {
+        switch (key) {
             case 'A':
                 sortByApp(list);
                 break;
             case 'P':
                 sortByPatient(list);
                 break;
-            case 'L', 'O', 'I':
+            case 'L':
+            case 'O':
+            case 'I':
                 sortByLocation(list);
                 break;
             case 'S':
@@ -101,9 +137,21 @@ public class Sort {
                 throw new IllegalArgumentException("Invalid key");
         }
     }
-    private static void sortProviderProfile(List<Provider> list) {
 
+    /**
+     * Sorts the list of providers based on their profiles.
+     *
+     * @param list the list of providers to be sorted
+     */
+    private static void sortProviderProfile(List<Provider> list) {
+        // Implementation needed for sorting providers by profile
     }
+
+    /**
+     * Sorts the list of providers by their last names and locations.
+     *
+     * @param list the list of providers to be sorted
+     */
     private static void sortProviders(List<Provider> list) {
         int n = list.size();
         for (int i = 0; i < n - 1; i++) {
@@ -131,7 +179,12 @@ public class Sort {
         }
     }
 
+    /**
+     * Sorts the list of providers.
+     *
+     * @param list the list of providers to be sorted
+     */
     public static void provider(List<Provider> list) {
-    sortProviders(list);
+        sortProviders(list);
     }
 }

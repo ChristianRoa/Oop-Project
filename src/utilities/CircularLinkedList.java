@@ -2,34 +2,67 @@ package utilities;
 
 import mypackage.Provider;
 
+/**
+ * A CircularLinkedList implementation that holds Provider objects.
+ * This list allows for adding providers, retrieving the head,
+ * printing the list of technician providers, and sorting them based on specific criteria.
+ *
+ * @author Christian Roa
+ */
 public class CircularLinkedList {
     private CircularNode head;
     private CircularNode tail;
     private int size;
 
+    /**
+     * A node in the CircularLinkedList that holds a Provider object.
+     */
     public static class CircularNode {
         Provider data;
         CircularNode next;
 
+        /**
+         * Constructs a CircularNode with the given Provider data.
+         *
+         * @param data the Provider data to store in the node
+         */
         CircularNode(Provider data) {
             this.data = data;
         }
 
+        /**
+         * Gets the next node in the circular linked list.
+         *
+         * @return the next CircularNode
+         */
         public CircularNode getNext() {
             return next;
         }
+
+        /**
+         * Gets the Provider data stored in this node.
+         *
+         * @return the Provider data
+         */
         public Provider getData() {
             return data;
         }
     }
 
+    /**
+     * Constructs an empty CircularLinkedList.
+     */
     public CircularLinkedList() {
         head = null;
         tail = null;
         size = 0;
     }
 
-    // Add a new provider to the circular linked list
+    /**
+     * Adds a new Provider to the circular linked list.
+     *
+     * @param provider the Provider to add to the list
+     */
     public void add(Provider provider) {
         CircularNode newNode = new CircularNode(provider);
         if (head == null) {
@@ -44,14 +77,28 @@ public class CircularLinkedList {
         size++;
     }
 
+    /**
+     * Gets the number of nodes in the circular linked list.
+     *
+     * @return the size of the list
+     */
     public int size() {
         return size;
     }
 
+    /**
+     * Gets the head node of the circular linked list.
+     *
+     * @return the head CircularNode
+     */
     public CircularNode getHead() {
         return head;
     }
 
+    /**
+     * Prints the names and locations of all technician providers in the list.
+     * The list is printed in a circular format with arrows indicating the next node.
+     */
     public void printTechProviders() {
         System.out.println("Rotation list for the technicians");
         if (head == null) return;
@@ -68,6 +115,10 @@ public class CircularLinkedList {
         System.out.println(); // Print a new line after the list
     }
 
+    /**
+     * Sorts the providers in the circular linked list based on their location and last name.
+     * The sorting is done in-place.
+     */
     public void sort() {
         if (head == null || head.next == head) return; // Check if list is empty or has only one element
         CircularNode current;

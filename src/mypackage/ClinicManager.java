@@ -7,7 +7,11 @@ import java.util.Scanner;
 import java.util.StringTokenizer;
 import java.io.File;
 import java.io.FileNotFoundException;
-
+/**
+ * The ClinicManager class manages the scheduling and handling of appointments
+ * for a medical clinic. It allows users to schedule, cancel, and display
+ * appointments, as well as manage providers and patients.
+ */
 public class ClinicManager {
     private Scanner scanner; // reads user input
     private List<Appointment> appointments; // stores all scheduled appointments
@@ -17,7 +21,9 @@ public class ClinicManager {
     private CircularLinkedList rotationList = new CircularLinkedList();
     private CircularLinkedList.CircularNode trackingNode;
     private List<Patient> medicalRecords;
-
+    /**
+     * Initializes a new instance of the ClinicManager class.
+     */
     public ClinicManager() {
         scanner = new Scanner(System.in);
         appointments = new List<>();
@@ -27,7 +33,10 @@ public class ClinicManager {
         medicalRecords = new List<>();
 
     }
-
+    /**
+     * Starts the ClinicManager, filling providers, sorting them, and
+     * entering the command processing loop.
+     */
     public void run() {
         fillProviders();
         Sort.provider(providers);
@@ -55,7 +64,12 @@ public class ClinicManager {
         }
         scanner.close();
     }
-
+    /**
+     * Processes a command entered by the user. It identifies the command
+     * and calls the appropriate method to handle it.
+     *
+     * @param commandLine the line of command input by the user
+     */
     private void processCommand(String commandLine) {
         StringTokenizer st = new StringTokenizer(commandLine, ",");
         String command = st.nextToken();
@@ -108,7 +122,12 @@ public class ClinicManager {
         }
     }
 
-
+    /**
+     * Fills the list of providers from a specified text file.
+     * Each line in the file represents a provider, with details about
+     * their type, name, date of birth, location, and other relevant
+     * information.
+     */
     private void fillProviders(){
         try {
             // Using Scanner to read the file
@@ -148,11 +167,20 @@ public class ClinicManager {
             System.out.println("File not found: " + e.getMessage());
         }
     }
+    /**
+     * Prints the list of providers to the console.
+     */
     private void printProviders(){
         for (Provider provider : providers) {
             System.out.println(provider.toString());
         }
     }
+    /**
+     * Fills the rotation list with technicians from the provided list.
+     *
+     * @param list the list of providers to filter technicians from
+     */
+
     private void fillRotationList(List<Provider> list){
         for (Provider provider : list) {
             if(provider instanceof Technician){
@@ -160,7 +188,12 @@ public class ClinicManager {
             }
         }
     }
-
+    /**
+     * Parses a date string in the format "MM/DD/YYYY" and returns a Date object.
+     *
+     * @param dateString the date string to parse
+     * @return the corresponding Date object
+     */
     private Date parseDate(String dateString) {
         StringTokenizer tokenizer = new StringTokenizer(dateString, "/");
 
@@ -170,7 +203,12 @@ public class ClinicManager {
 
         return new Date(year, month, day);
     }
-
+    /**
+     * Parses a location string and returns the corresponding Location enum.
+     *
+     * @param locationString the location string to parse
+     * @return the corresponding Location enum, or null if not recognized
+     */
     private Location parseLocation(String locationString) {
         if (locationString == null || locationString.isEmpty()) {
             return null;
@@ -189,7 +227,12 @@ public class ClinicManager {
             default -> null;
         };
     }
-
+    /**
+     * Parses a specialty string and returns the corresponding Specialty enum.
+     *
+     * @param specialtyString the specialty string to parse
+     * @return the corresponding Specialty enum, or null if not recognized
+     */
     private Specialty parseSpecialty(String specialtyString) {
         if (specialtyString == null || specialtyString.isEmpty()) {
             return null;
@@ -204,6 +247,13 @@ public class ClinicManager {
             default -> null;
         };
     }
+    /**
+     * Checks the availability of a doctor for a given timeslot.
+     *
+     * @param p the provider to check
+     * @param timeslot the timeslot to check availability for
+     * @return true if the provider is available, false otherwise
+     */
     private boolean docAvailabilityChecker(Provider p, Timeslot timeslot){
         for (Appointment a : appointments) {
             if (a.getProvider() instanceof Doctor && a.getProviderAsProvider().equals(p)) {
@@ -214,7 +264,12 @@ public class ClinicManager {
         }
         return true;
     }
-
+    /**
+     * Schedules a doctor appointment based on provided tokens.
+     *
+     * @param st the string tokenizer containing the appointment data
+     * @throws IllegalArgumentException if the appointment data is invalid
+     */
     private void scheduleDocApp(StringTokenizer st) {
         boolean correctTokens = true;
         if (st.countTokens() < 6) {
@@ -279,7 +334,13 @@ public class ClinicManager {
         System.out.println(appointment + " booked.");
     }
 
-
+    /**
+     * Checks the availability of a technician for a given timeslot.
+     *
+     * @param p The provider (technician) to check for availability.
+     * @param timeslot The timeslot to check against existing appointments.
+     * @return true if the technician is available for the given timeslot; false otherwise.
+     */
     private boolean techAvailabilityChecker(Provider p, Timeslot timeslot) {
         for (Appointment a : appointments) {
             if(a.getProvider() instanceof Technician && ((Technician) a.getProvider()).getLocation().equals(p.getLocation())){
@@ -290,7 +351,15 @@ public class ClinicManager {
         }
         return true;
     }
-
+    /**
+     * Schedules a technician appointment based on the provided tokenized input.
+     *
+     * @param st A StringTokenizer containing the appointment details in the following order:
+     *           date, timeslot, patient's first name, patient's last name,
+     *           patient's date of birth, and imaging service.
+     * @throws IllegalArgumentException if any of the provided data tokens are invalid
+     *                                  (e.g., invalid date, invalid timeslot, etc.).
+     */
     private void scheduleTechApp(StringTokenizer st) {
         boolean correctTokens = true;
         if (st.countTokens() < 6) {
@@ -357,7 +426,13 @@ public class ClinicManager {
             throw new IllegalArgumentException("Cannot find an available technician at all locations for " + imagingService + " at slot " + timeslotStr + ".");
         }
     }
-
+    /**
+     * Cancels an existing appointment based on the provided tokenized input.
+     *
+     * @param st A StringTokenizer containing the appointment details in the following order:
+     *           date, timeslot, patient's first name, patient's last name, and patient's date of birth.
+     *           If the appointment is found, it will be removed from the schedule.
+     */
     private void cancelAppointment(StringTokenizer st) {
         String dateString = st.nextToken();
         String timeslotStr = st.nextToken();
@@ -377,7 +452,15 @@ public class ClinicManager {
         }
         System.out.println(temp.toString() + " appointment does not exist.");
     }
-
+    /**
+     * Reschedules an existing appointment to a new timeslot based on the provided tokenized input.
+     *
+     * @param st A StringTokenizer containing the appointment details in the following order:
+     *           date, old timeslot, patient's first name, patient's last name,
+     *           patient's date of birth, and new timeslot.
+     * @throws IllegalArgumentException if the original appointment does not exist or if the
+     *                                  new timeslot is already booked.
+     */
     private void rescheduleAppointment(StringTokenizer st) {
         String dateString = st.nextToken();
         String timeslotStr = st.nextToken();
@@ -404,7 +487,10 @@ public class ClinicManager {
             System.out.println("Rescheduled to " + rescheduledApp.toString());
         }
     }
-
+    /**
+     * Displays the list of appointments sorted by date, time, and provider.
+     * If the appointment list is empty, a message is displayed indicating so.
+     */
     private void displaySortByApp(){
         if (appointments.isEmpty()) {
             System.out.println("Schedule calendar is empty.");
@@ -418,7 +504,10 @@ public class ClinicManager {
         }
         System.out.println("** end of list **");
     }
- // fix
+    /**
+     * Displays the list of appointments sorted by patient name, date, and time.
+     * If the appointment list is empty, a message is displayed indicating so.
+     */
     private void displaySortByPatient() {
         if (appointments.isEmpty()) {
             System.out.println("Schedule calendar is empty.");
@@ -432,7 +521,10 @@ public class ClinicManager {
         }
         System.out.println("** end of list **");
     }
-
+    /**
+     * Displays the list of appointments sorted by location, date, and time.
+     * If the appointment list is empty, a message is displayed indicating so.
+     */
     private void displaySortByLocation() {
         if (appointments.isEmpty()) {
             System.out.println("Schedule calendar is empty.");
@@ -446,6 +538,10 @@ public class ClinicManager {
         }
         System.out.println("** end of list **");
     }
+    /**
+     * Displays a billing statement for all patients, ordered by patient name.
+     * If the appointment list is empty, a message is displayed indicating so.
+     */
     private void displaySortBill() {
         if (appointments.isEmpty()) {
             System.out.println("Schedule calendar is empty.");
@@ -507,9 +603,9 @@ public class ClinicManager {
 
         System.out.println("** end of list **");
     }
-
-
-
+    /**
+     * Fills the list of office appointments by filtering out imaging appointments.
+     */
     private void fillOfficeApps(){
         for(Appointment a : appointments){
             if(!(a instanceof  Imaging)){
@@ -517,6 +613,10 @@ public class ClinicManager {
             }
         }
     }
+    /**
+     * Displays the list of office appointments ordered by county, date, and time.
+     * If the office appointments list is empty, a message is displayed indicating so.
+     */
     private void displayOfficeApps() {
         if (officeApps.isEmpty()) {
             System.out.println("Schedule calendar is empty.");
@@ -531,6 +631,9 @@ public class ClinicManager {
         }
         System.out.println("** end of list **");
     }
+    /**
+     * Fills the list of imaging appointments.
+     */
     private void fillImageApps(){
         for(Appointment a : imagingApps){
             if(a instanceof  Imaging){
@@ -538,6 +641,10 @@ public class ClinicManager {
             }
         }
     }
+    /**
+     * Displays the list of radiology appointments ordered by county, date, and time.
+     * If the imaging appointments list is empty, a message is displayed indicating so.
+     */
     private void displayImageApps() {
         if (imagingApps.isEmpty()) {
             System.out.println("Schedule calendar is empty.");
@@ -552,6 +659,10 @@ public class ClinicManager {
         }
         System.out.println("** end of list **");
     }
+    /**
+     * Displays the expected credit amount ordered by provider.
+     * If the provider list is empty, a message is displayed indicating so.
+     */
     private void displayExpectedCredit(){
         if (providers.isEmpty()) {
             System.out.println("Schedule calendar is empty.");

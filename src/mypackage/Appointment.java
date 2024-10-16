@@ -4,7 +4,8 @@ import utilities.Date;
 
 /**
  * This class models an appointment with attributes for date, timeslot, patient, and provider.
- * @author Christian Roa, Renil Khristi
+ *
+ * <p>Author: Christian Roa, Renil Khristi</p>
  */
 public class Appointment implements Comparable<Appointment> {
     protected Date date;
@@ -32,7 +33,6 @@ public class Appointment implements Comparable<Appointment> {
      *
      * @return the date of the appointment
      */
-    /** date getter */
     public Date getDate() {
         return date;
     }
@@ -55,12 +55,19 @@ public class Appointment implements Comparable<Appointment> {
         return patient;
     }
 
-    public Patient getPatientasPatient() {
+    /**
+     * Retrieves the patient as a Patient object if the patient is indeed a Patient,
+     * otherwise returns null.
+     *
+     * @return the patient as a Patient object or null if not applicable
+     */
+    public Patient getPatientAsPatient() {
         if (patient instanceof Patient) {
             return (Patient) patient;
         }
-        return null; // In case the provider is not a Provider instance
+        return null; // In case the patient is not a Patient instance
     }
+
     /**
      * Retrieves the provider of the appointment.
      *
@@ -71,8 +78,10 @@ public class Appointment implements Comparable<Appointment> {
     }
 
     /**
-     * Returns the provider as a Provider object if the provider is indeed a Provider,
+     * Retrieves the provider as a Provider object if the provider is indeed a Provider,
      * otherwise returns null.
+     *
+     * @return the provider as a Provider object or null if not applicable
      */
     public Provider getProviderAsProvider() {
         if (provider instanceof Provider) {

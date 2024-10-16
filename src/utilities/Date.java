@@ -81,18 +81,18 @@ public class Date implements Comparable<Date> {
     /**
      * Compares this Date object with another Date object.
      *
-     * @param date The Date to compare with.
+     * @param other The Date to compare with.
      * @return A negative integer, zero, or a positive integer if this Date is less than, equal to, or greater than the specified date.
      */
     @Override
-    public int compareTo(Date date) {
-        if (this.year != date.year) {
-            return this.year - date.year;
-        } else if (this.month != date.month) {
-            return this.month - date.month;
-        } else {
-            return this.day - date.day;
+    public int compareTo(Date other) {
+        if (this.year != other.year) {
+            return Integer.compare(this.year, other.year);
         }
+        if (this.month != other.month) {
+            return Integer.compare(this.month, other.month);
+        }
+        return Integer.compare(this.day, other.day);
     }
 
     /**

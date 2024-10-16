@@ -1,6 +1,9 @@
 package mypackage;
+
 /**
-Enum class that represents the location and specifically the county and zip of the provider
+ * Enum class that represents the location of a healthcare provider,
+ * specifically including the county and ZIP code.
+ *
  * @author Renil Khristi, Christian Roa
  */
 public enum Location {
@@ -11,32 +14,35 @@ public enum Location {
     MORRISTOWN("Morris", "07960"),
     CLARK("Union", "07066");
 
-    private final String county;
-    private final String zip;
+    private final String county; // The county where the provider is located
+    private final String zip;     // The ZIP code of the location
 
-    /*
-    Creates the constuctor 
-    @param county 
-    @param zip
+    /**
+     * Creates a Location enum constant with the specified county and ZIP code.
+     *
+     * @param county The county of the provider's location.
+     * @param zip    The ZIP code of the provider's location.
      */
-    private Location(String county, String zip){
+    private Location(String county, String zip) {
         this.county = county;
         this.zip = zip;
     }
 
-    /*
-    Gets the county 
-    @return the county
+    /**
+     * Gets the county of the provider's location.
+     *
+     * @return The county as a String.
      */
     public String getCounty() {
-    	return county;
+        return county;
     }
 
-    /*
-    Gets the zip
-    @return the zip
+    /**
+     * Gets the ZIP code of the provider's location.
+     *
+     * @return The ZIP code as a String.
      */
     public String getZip() {
-    	return zip;
-    }    
+        return zip;
+    }
 }
