@@ -22,7 +22,7 @@ public class Profile implements Comparable<Profile> {
 	 * @param lname The last name of the patient.
 	 * @param dob   The date of birth of the patient.
 	 */
-	Profile(String fname, String lname, Date dob) {
+	public Profile(String fname, String lname, Date dob) {
 		this.fname = fname;
 		this.lname = lname;
 		this.dob = dob;
