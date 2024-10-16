@@ -8,11 +8,17 @@ import mypackage.Provider;
 import mypackage.Technician;
 import org.junit.Test;
 
-
 import static org.junit.Assert.*;
 
+/**
+ * This class tests the functionality of the custom List class using Provider objects,
+ * specifically Doctors and Technicians.
+ */
 public class ListTest {
 
+    /**
+     * Tests adding a Doctor to the List and verifies that the List contains the Doctor.
+     */
     @Test
     public void addDoctor() {
         List<Provider> providerList = new List<>();
@@ -22,6 +28,9 @@ public class ListTest {
         assertTrue(providerList.contains(doctor));
     }
 
+    /**
+     * Tests adding a Technician to the List and verifies that the List contains the Technician.
+     */
     @Test
     public void addTech() {
         List<Provider> providerList = new List<>();
@@ -31,6 +40,9 @@ public class ListTest {
         assertTrue(providerList.contains(technician));
     }
 
+    /**
+     * Tests removing a Doctor from the List and verifies that the List no longer contains the Doctor.
+     */
     @Test
     public void removeDoctor() {
         List<Provider> providerList = new List<>();
@@ -41,6 +53,9 @@ public class ListTest {
         assertFalse(providerList.contains(doctor));
     }
 
+    /**
+     * Tests removing a Technician from the List and verifies that the List no longer contains the Technician.
+     */
     @Test
     public void removeTech() {
         List<Provider> providerList = new List<>();

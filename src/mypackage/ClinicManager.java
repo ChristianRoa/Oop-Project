@@ -13,13 +13,37 @@ import java.io.FileNotFoundException;
  * appointments, as well as manage providers and patients.
  */
 public class ClinicManager {
-    private Scanner scanner; // reads user input
-    private List<Appointment> appointments; // stores all scheduled appointments
+    /**
+     * The scanner to read user inputs
+     */
+    private Scanner scanner;
+    /**
+     * Holds list of scheduled appointments both office and imaging
+     */
+    private List<Appointment> appointments;
+    /**
+     * Holds list of scheduled office appointments
+     */
     private List<Appointment> officeApps;
+    /**
+     * Holds list of scheduled imaging appointments
+     */
     private List<Appointment> imagingApps;
+    /**
+     * Holds list of possible providers
+     */
     private List<Provider> providers;
+    /**
+     * linked list of imaging providers
+     */
     private CircularLinkedList rotationList = new CircularLinkedList();
+    /**
+     * Node to track next provider in the rotation
+     */
     private CircularLinkedList.CircularNode trackingNode;
+    /**
+     * List of patients to track there expenses
+     */
     private List<Patient> medicalRecords;
     /**
      * Initializes a new instance of the ClinicManager class.
@@ -123,7 +147,7 @@ public class ClinicManager {
     }
 
     /**
-     * Fills the list of providers from a specified text file.
+     * Fills the list with providers from a specified text file.
      * Each line in the file represents a provider, with details about
      * their type, name, date of birth, location, and other relevant
      * information.
@@ -131,7 +155,7 @@ public class ClinicManager {
     private void fillProviders(){
         try {
             // Using Scanner to read the file
-            Scanner fileScanner = new Scanner(new File("C:\\Users\\croaa\\IdeaProjects\\OOPproject\\src\\providers.txt"));
+            Scanner fileScanner = new Scanner(new File("src/providers.txt"));
             while (fileScanner.hasNextLine()) {
                 String line = fileScanner.nextLine().trim();
                 if (line.isEmpty()) {

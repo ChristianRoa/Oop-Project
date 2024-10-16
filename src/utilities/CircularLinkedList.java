@@ -10,15 +10,30 @@ import mypackage.Provider;
  * @author Christian Roa
  */
 public class CircularLinkedList {
+    /**
+     * The first Node in the Circular linked list
+     */
     private CircularNode head;
+    /**
+     * The Last Node in the Circular linked list
+     */
     private CircularNode tail;
+    /**
+     * The size of the Circular linked list
+     */
     private int size;
 
     /**
      * A node in the CircularLinkedList that holds a Provider object.
      */
     public static class CircularNode {
+        /**
+         * The data key of the CircularLinkedList - provider
+         */
         Provider data;
+        /**
+         * reference to the next Provider object
+         */
         CircularNode next;
 
         /**

@@ -7,8 +7,17 @@ import java.util.Calendar;
  * @author Christian Roa, Renil Khristi
  */
 public class Date implements Comparable<Date> {
+    /**
+     * Integer representation of year
+     */
     private int year;
+    /**
+     * Integer representation of month
+     */
     private int month;
+    /**
+     * Integer representation of day
+     */
     private int day;
 
     /**
@@ -187,45 +196,5 @@ public class Date implements Comparable<Date> {
         } catch (Exception e) {
             return false;
         }
-    }
-
-
-    /** testbed for the Date class */
-    public static void main(String[] args) {
-        testValid1(); //testing tomm
-        testValid2(); // testing valid date within 6 months
-        testValid3(); // testing leap year date in non leap year
-        testValid4(); // testing before date
-        testValid5(); // testing after date
-        testValid6(); // testing within 6 months but on a weekend
-    }
-    private static void testValid1() {
-        Date date = new Date(2024, 9, 30);
-        System.out.println(date.toString() + " " + date.isValidDate());
-    }
-
-    private static void testValid2() {
-        Date date = new Date(2026, 2, 28);
-        System.out.println(date.toString() + " " + date.isValidDate());
-    }
-
-    private static void testValid3() {
-        Date date = new Date(2025, 2, 29);
-        System.out.println(date.toString() + " " + date.isValidDate());
-    }
-
-    private static void testValid4() {
-        Date date = new Date(2024, 2, 29);
-        System.out.println(date.toString() + " " + date.isBeforeToday());
-    }
-
-    private static void testValid5() {
-        Date date = new Date(2028, 5, 30);
-        System.out.println(date.toString() + " " + date.isWithinSixMonths());
-    }
-
-    private static void testValid6() {
-        Date date = new Date(2024, 10, 5);
-        System.out.println(date.toString() + " " + date.isWeekday());
     }
 }

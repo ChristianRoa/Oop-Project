@@ -8,9 +8,21 @@ import utilities.Date;
  * <p>Author: Christian Roa, Renil Khristi</p>
  */
 public class Appointment implements Comparable<Appointment> {
+    /**
+     * The date and first entry of an Appointment
+     */
     protected Date date;
+    /**
+     * The selected Timeslot and second entry of an Appointment
+     */
     protected Timeslot timeslot;
+    /**
+     * The Person type patient and third entry of an Appointment
+     */
     protected Person patient;
+    /**
+     * The Person type provider and fourth entry of an Appointment
+     */
     protected Person provider;
 
     /**
